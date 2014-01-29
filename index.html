@@ -45,6 +45,8 @@
                     <li>Modularity</li>
                     <li>Templating</li>
                     <li>Eventing</li>
+                    <li>Computed Properties</li>
+                    <li>Observers</li>
                 </ul>
             </section>
             <section><h3>A few reasons to be overly excited about Ember's future</h3></section>
@@ -64,13 +66,53 @@
             <p>A collaborative real-time markdown editor</p>
         </section>
         <section>
-            <h1>Our "Stack"</h1>
+            <h3>Our "Stack"</h3>
             <ul>
                 <li>Firebase (API / realtime sync / database)</li>
                 <li>Ember (client-side MVC Framework)</li>
                 <li>Bootstrap CSS (to make rapid prototyping easier)</li>
                 <li>Candy (various javascript libraries that enhance the experience)</li>
             </ul>
+        </section>
+        <section>
+            <h2>Let's Get Started</h2>
+        </section>
+        <section>
+            <section>
+                <h2>What is Javascript?</h2>
+                <p class="fragment">Javascript is a dynamically typed scripting language most commonly used for web application development.</p>
+                <p class="fragment">In Javascript, everything is an object, and all objects are passed by reference.</p>
+            </section>
+            <section>
+                <h2>What is an Object?</h2>
+                <p class="fragment">In the most abstract sense, an object is a constant pointer to specific memory.</p>
+                <p class="fragment">In usage, an object is a collection of properties: key : value pairs for specific data.</p>
+                <p class="fragment">Some properties are actually functions, known as methods.</p>
+            </section>
+            <section data-markdown>
+                <script type="text/template">
+                    ## A Javascript Object
+                    ```json
+                    //curly brackets denote an object
+                    var User = {
+                            firstname : '',
+                            lastname : ''
+                        },
+                        me = null;
+                    
+                    //creates a new instance of user
+                    me = new User();
+                    me.firstname = "Chris";
+                    me.lastname = "Thoburn";
+                    
+                    //defines a new fullname method on this instance only
+                    me.fullname = function () { return this.firstname + ' ' + this.lastname; };
+                    
+                    //define a method on all instances of User
+                    User.prototype.fullname = function () { return this.firstname + ' ' + this.lastname; };
+                    ```
+                </script>
+            </section>
         </section>
     </div>
 </div>
