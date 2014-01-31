@@ -66,26 +66,132 @@
                 <p class="fragment">Some properties are actually functions, known as methods.</p>
             </section>
             <section data-markdown>
-                <script type="text/template">
-                    ## A Javascript Object
-                    ```json
+            <script type="text/template">
+                    ## A Basic Javascript Object
+                    ```javascript
                     //curly brackets denote an object
                     var User = {
                             firstname : '',
                             lastname : ''
+                        };
+                    
+                    User.firstname = "Chris";
+                    User.lastname = "Thoburn";
+                    
+                    //creates a new fullname property and sets it's value
+                    User.fullname = "Chris Thoburn";
+                    
+                    ```
+                </script>
+            </section>
+            <section>
+                <p>Basic objects are used often, but aren't actually that useful.</p>
+                <p>Most applications eventually need reusable object templates.</p>
+                <p>Some applications also need to be able to know when an object's property changes.</p>
+            </section>
+            <section data-markdown>
+                <script type="text/template">
+                    ## A Re-usable Javascript Object
+                    ```javascript
+                    //curly brackets denote an object
+                    var User = function () {
+                            this.firstname = '';
+                            this.lastname = '';
                         },
                         me = null;
                     
-                    //creates a new instance of user
+                    //this is just a copy to the same "object factory"
+                    me = User;
+                    
+                    //this doesn't work as nothing is returned from the constructor function
+                    me = User();
+                    
+                    //this creates a new instance of User
                     me = new User();
                     me.firstname = "Chris";
                     me.lastname = "Thoburn";
                     
-                    //defines a new fullname method on this instance only
-                    me.fullname = function () { return this.firstname + ' ' + this.lastname; };
+                    ```
+                </script>
+            </section>
+            <section data-markdown>
+                <script type="text/template">
+                    ## A Re-usable Javascript Object with initialization
+                    ```javascript
                     
-                    //define a method on all instances of User
-                    User.prototype.fullname = function () { return this.firstname + ' ' + this.lastname; };
+                    var User = function (initialValues) {
+                        
+                            initialValues = initialValues || {};
+                        
+                            this.firstname = initialValues.firstname || '';
+                            this.lastname = initialValues.lastname || '';
+                            
+                        },
+                        me = null;
+                    
+                    me = new User({firstname: 'Chris', lastname : 'Thoburn'});
+                    
+                    ```
+                </script>
+            </section>
+            <section data-markdown>
+                <script type="text/template">
+                    ## Object Methods
+                    ```javascript
+                    
+                    //same User object as before
+                    me = new User();
+                    
+                    //defines a new fullname method on this instance only
+                    me.fullname = function () {
+                        return this.firstname + ' ' + this.lastname;
+                        };
+                    
+                    //define a method on all instances of User now and in the future
+                    User.prototype.fullname = function () {
+                       return (this.firstname ? this.firstname + ' ' : '') + this.lastname;
+                    };
+                    
+                    ```
+                </script>
+            </section>
+            <section>
+                <p>Sometimes you need more advanced behavior from your properties</p>
+                <ul>
+                    <li class="fragment">Execute code when a value changes</li>
+                    <li class="fragment">Controlled Access</li>
+                </ul>
+                <p>https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/defineProperty?redirectlocale=en-US&redirectslug=JavaScript%2FReference%2FGlobal_Objects%2FObject%2FdefineProperty</p>
+            </section>
+            <section data-markdown>
+                <script type="text/template">
+                    ## Advanced Properties
+                    ```javascript
+                    
+                    Object.defineProperty (User, 'age', {
+                        get : function () {
+                            var birthday = value,
+                                today = new Date(),
+                                age = 0;
+                            
+                            age = today.getYear() - birthday.getYear();
+                            
+                            //adjust based on whether the date has passed yet
+                            today.setFullYear(birthday.getFullYear());
+                            if (today - birthday < 0) {
+                                age--;
+                            }
+                            return age;
+                        },
+                        set : function (date) {
+                            if (date instanceof Date) {
+                                value = Date;
+                            } else {
+                                value = new Date(date);
+                            }
+                        },
+                    });
+                    
                     ```
                 </script>
             </section>
