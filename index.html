@@ -67,7 +67,7 @@
             </section>
             <section data-markdown>
             <script type="text/template">
-                    ## A Basic Javascript Object
+                    ### A Basic Javascript Object
                     ```javascript
                     //curly brackets denote an object
                     var User = {
@@ -91,7 +91,7 @@
             </section>
             <section data-markdown>
                 <script type="text/template">
-                    ## A Re-usable Javascript Object
+                    ### A Re-usable Javascript Object
                     ```javascript
                     //curly brackets denote an object
                     var User = function () {
@@ -116,7 +116,7 @@
             </section>
             <section data-markdown>
                 <script type="text/template">
-                    ## A Re-usable Javascript Object with initialization
+                    ### A Re-usable Javascript Object with initialization
                     ```javascript
                     
                     var User = function (initialValues) {
@@ -136,7 +136,7 @@
             </section>
             <section data-markdown>
                 <script type="text/template">
-                    ## Object Methods
+                    ### Object Methods
                     ```javascript
                     
                     //same User object as before
@@ -161,11 +161,10 @@
                     <li class="fragment">Execute code when a value changes</li>
                     <li class="fragment">Controlled Access</li>
                 </ul>
-                <p>https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/defineProperty?redirectlocale=en-US&redirectslug=JavaScript%2FReference%2FGlobal_Objects%2FObject%2FdefineProperty</p>
             </section>
             <section data-markdown>
                 <script type="text/template">
-                    ## Advanced Properties
+                    ### Advanced Properties
                     ```javascript
                     
                     Object.defineProperty (User, 'age', {
@@ -183,6 +182,19 @@
                             }
                             return age;
                         },
+                        ...
+                    });
+                    
+                    ```
+                </script>
+            </section>
+             <section data-markdown>
+                <script type="text/template">
+                    ### Advanced Properties
+                    ```javascript
+                    
+                    Object.defineProperty (User, 'age', {
+                        ...
                         set : function (date) {
                             if (date instanceof Date) {
                                 value = Date;
@@ -195,6 +207,58 @@
                     ```
                 </script>
             </section>
+             <section data-markdown>
+                <script type="text/template">
+                    ### Functions
+                    ```javascript
+                    
+                    var stringify = function (anArray) {
+                        return typeof anArray === 'string' ? anArray.join(' ') || '';
+                    };
+                    
+                    function stringify (anArray) {
+                        return typeof anArray === 'string' ? anArray.join(' ') || '';
+                    };
+                    ```
+                </script>
+            </section>
+            <section data-markdown>
+                <script type="text/template">
+                    ### Function Arguments
+                    ```javascript
+                    
+                    var stringify = function () {
+                        
+                        var newString = '',
+                            index = arguments.length;
+                            
+                        arguments.reverse();
+                            
+                        while (index--) {
+                            
+                            if( typeof arguments[index] === 'array') {
+                                arguments[index] = arguments[index].join(' ');
+                            }
+                        }
+                        return arguments.join(' ');;
+                    };
+                    
+                    ```
+                </script>
+            </section>
+        </section>
+        <section>
+            <h3>Programming in a Web Environment</h3>
+            <ul>
+                <li class="fragment">Single Threaded Applications</li>
+                <li class="fragment">Synchronous Behavior</li>
+                <li class="fragment">Asynchronous Behavior</li>
+                <li class="fragment">AJAX and WebSockets</li>
+                <li class="fragment">API Driven Development</li>
+                <li class="fragment">Graceful Degredation</li>
+                <li class="fragment">Progressive Enhancement</li>
+                <li class="fragment">Hacking Performance</li>
+            </ul>
         </section>
     </div>
 </div>
