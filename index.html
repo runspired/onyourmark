@@ -246,6 +246,124 @@
                     ```
                 </script>
             </section>
+            <section data-markdown>
+                <script type="text/template">
+                    ### Functions that don't return.
+                    ```javascript
+                    
+                    var count = 0;
+                    
+                    function incrementCount () {
+                        count += 1;
+                    };
+                    
+                    ```
+                </script>
+            </section>
+        </section>
+        <section>
+            <section>
+                <h3>Variable Scope</h3>
+                <p>Javascript applications typically have three scopes to consider.</p>
+                <ul>
+                    <li class="fragment">Global (e.g. window)</li>
+                </ul>
+            </section>
+            <section data-markdown>
+                <script type="text/template">
+                    ### Variable Scope - Global
+                    ```javascript
+                    
+                    //count is in the global scope
+                    //only because we don't have a more localized scope.
+                    var count = 0;
+                    
+                    //otherCount is also in the global scope.
+                    otherCount = 0;
+                    
+                    //in web browsers, window is a reference to the topmost scope
+                    //in the given document.
+                    window.count = 0;
+                    
+                    ```
+                </script>
+            </section>
+            <section>
+                <h3>Variable Scope</h3>
+                <p>Javascript applications typically have three scopes to consider.</p>
+                <ul>
+                    <li>Global (e.g. window)</li>
+                    <li>Closure</li>
+                </ul>
+            </section>
+            <section data-markdown>
+                <script type="text/template">
+                    ### Variable Scope - Closures
+                    ```javascript
+                    
+                    //global
+                    count = 0;
+                    (function () {
+                        //closure
+                        var count = 1;
+                        
+                        //this is the parent scope here
+                        this.sayCount = function () {
+                          return count;  
+                        };
+                    })();
+                    
+                    //alerts 0
+                    alert(count);
+                    
+                    //alerts 1
+                    alert( this.sayCount );
+                    ```
+                </script>
+            </section>
+            <section>
+                <h3>Variable Scope</h3>
+                <p>Javascript applications typically have three scopes to consider.</p>
+                <ul>
+                    <li>Global (e.g. window)</li>
+                    <li>Closure</li>
+                    <li>Local</li>
+                </ul>
+            </section>
+            <section data-markdown>
+                <script type="text/template">
+                    ### Variable Scope - Local
+                    ```javascript
+                    
+                    //global
+                    count = 0;
+                    (function () {
+                        //closure
+                        var count = 1;
+                        
+                        //this is the parent scope here
+                        this.sayCount = function () {
+                          return count;  
+                        };
+                        
+                        this.getCount = function () {
+                            var count = 2;
+                            return count;
+                        }
+                        
+                    })();
+                    
+                    //alerts 0
+                    alert(count);
+                    
+                    //alerts 1
+                    alert( this.sayCount );
+                    
+                    //alerts 2
+                    alert( this.getCount );
+                    ```
+                </script>
+            </section>
         </section>
         <section>
             <h3>Programming in a Web Environment</h3>
