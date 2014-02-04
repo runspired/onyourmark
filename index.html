@@ -342,6 +342,75 @@
         </section>
         <section>
             <section>
+                <h4>Function Methods</h4>
+            </section>
+            <section>
+                <p>I mentioned that functions are objects too.  This means that functions also have properties and methods.</p>
+                <p class="fragment">We say this above with closures and reusable objects, both of which utilized a function wrapper.</p>
+                <p class="fragment">Three function methods you should know about: .call(), .apply() and .bind()</p>
+            </section>
+            <section data-markdown>
+                <script type="text/template">
+                    #### function.call()
+                    ```javascript
+                    
+                    function appendToString() {
+                        var length = arguments.length, index;
+                        for (index = 0; index < length; index++)
+                            this.value += ' ' + arguments[index];
+                    };
+                    
+                    var aString = {value : ''};
+                    appendToString.call(aString, 'Hello', 'there', 'world!');
+                    
+                    console.log(aString.value); //prints "Hello there world!"
+                    ```
+                </script>
+            </section>
+            <section data-markdown>
+                <script type="text/template">
+                    #### function.apply()
+                    ```javascript
+                    
+                    function appendToString() {
+                        var length = arguments.length, index;
+                        for (index = 0; index < length; index++)
+                            this.value += ' ' + arguments[index];
+                    };
+                    
+                    var aString = {value : ''},
+                        stringFragments = ['Hello', 'there', 'world!'];
+                        
+                    appendToString.apply(aString, stringFragments);
+                    
+                    console.log(aString.value); //also prints "Hello there world!"
+                    ```
+                </script>
+            </section>
+            <section data-markdown>
+                <script type="text/template">
+                    #### function.bind()
+                    ```javascript
+                    
+                    function appendToString() {
+                        var length = arguments.length, index;
+                        for (index = 0; index < length; index++)
+                            this.value += ' ' + arguments[index];
+                    };
+                    
+                    var aString = {value : ''},
+                        logString = appendToString.bind(aString);
+                    
+                    logString('Hello');
+                    logString('World');
+                    
+                    console.log(aString.value); //also prints "Hello World"
+                    ```
+                </script>
+            </section>
+        </section>
+        <section>
+            <section>
                 <h4>Programming in a Web Environment</h4>
             </section>
             <section>
@@ -708,11 +777,74 @@
                     <li class="fragment">helps you develop with an "iterative/agile" approach.</li>
                 </ul>
             </section>
+            <section>
+                <section>
+                    <h3>Frameworks : You need one.</h3>
+                </section>
+                <section>
+                    <h3>What is a Framework?</h3>
+                    <p class="fragment">At it's most basic level, a framework is a collection of APIs that help you build applications faster.</p>
+                    <p class="fragment">Framework's also help you organize your code and provide ways to build more re-usable code.</p>
+                    <p class="fragment">Advanced framework's make important design decisions for you.</p>
+                </section>
+                <section>
+                    <h3>Why You Need A Framework.</h3>
+                    <p class="fragment">Code organization is always important.  Both Time and Scale harm projects, great organization lessens this harm and makes projects maintainable.</p>
+                    <p class="fragment">What starts as a few jQuery scripts often balloons into a tangled mess.  Tangled messes are unmaintainable.  Using a framework will often help you produce more, even on smaller projects.</p>
+                    <p class="fragment">Sometimes, even the simplest app can be made better with a framework.</p>
+                    <p class="fragment">If you consider it a "web app" and not a "web page", then you definitely need a framework.</p>
+                </section>
+                <section>
+                    <h3>Selecting A Framework</h3>
+                    <p>Ideally you should know what these design decisions are, and why they are good/bad design decisions when you evaluate a framework for use in a project.</p>
+                    <p>In practice, most engineers know little about the guts of the framework they use.</p>
+                    <p>Use something you mostly understand, that has good documentation, strong examples, and a vibrant support community.</p>
+                    <p>When it comes time for it, hire someone more experienced to make the informed framework decision.</p>
+                </section>
+                <section>
+                    <h3>Why You Shouldn't Use Ember</h3>
+                    <p class="fragment">Ember has good, but not great documentation. (Missing version based documentation)</p>
+                    <p class="fragment">Ember has good, but conflicting examples. (Ember has changed a lot in the last few years, not everything you read is right).</p>
+                    <p class="fragment">Ember "is too hard/complicated"</p>
+                    <p class="fragment">Ember "is Beta"</p>
+                </section>
+                <section>
+                    <h3>Why You Should Use Ember</h3>
+                    <p class="fragment">Ember has an amazing support community.</p>
+                    <p class="fragment">Ember is supported and used by the biggest names in the industry.</p>
+                    <p class="fragment">You've been exposed to the idea's in Ember before, as "Sproutcore".</p>
+                    <p class="fragment">Sproutcore is the foundation of Apple's and Facebook's web interfaces.</p>
+                    <p class="fragment">Ember is currently the choice framework of Groupon, Living Social, Apple, and Yahoo</p>
+                </section>
+                <section>
+                    <h3>Why you should use Ember (technical perspective)</h3>
+                    <p class="fragment">Ember's design decisions are proven best practices.</p>
+                    <p class="fragment">Ember isn't "Beta", but be careful: ember-data most definitely is.</p>
+                    <p class="fragment">Ember's learning curve can be steep, but the payoff curve is far steeper.</p>
+                </section>
+                <section>
+                    <h4>The Ember-bootstrap caveat</h4>
+                    <p>Ember uses handlebars.js for templating and metamorph for content binding (as do most frameworks that allow for live-binding).  This inserts script tags that decrease rendering performance and prevents some CSS selectors used by Bootstrap from operating correctly.</p>
+                </section>
+                <section>
+                    <h4>The Ember-bootstrap brightside</h4>
+                    <p>The Ember team is close to releasing HTMLBars. This will solve the Bootstrap issue, and will also make Ember the most performant framework on the web.  In some test cases, HTMLBars results in Ember out-performing default native rendering.</p>
+                </section>
+            </section>
         </section>
+        
+        
+        
+        
         <section>
             <h2>Part 2</h2>
             <h4 class="fragment">Programming Paradigms</h4>
         </section>
+        <section>
+        </section>
+        
+        
+        
         
         <section>
             <h2>Part 3</h2>
@@ -721,6 +853,15 @@
         </section>
     </div>
 </div>
+
+
+
+
+
+
+
+
+
 
 <script type="text/javascript">
 Reveal.initialize({
