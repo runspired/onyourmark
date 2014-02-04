@@ -366,17 +366,50 @@
             </section>
         </section>
         <section>
-            <h4>Programming in a Web Environment</h4>
-            <ul>
-                <li class="fragment">Single Threaded Applications</li>
-                <li class="fragment">Synchronous Behavior</li>
-                <li class="fragment">Asynchronous Behavior</li>
-                <li class="fragment">AJAX and WebSockets</li>
-                <li class="fragment">API Driven Development</li>
-                <li class="fragment">Graceful Degredation</li>
-                <li class="fragment">Progressive Enhancement</li>
-                <li class="fragment">Hacking Performance</li>
-            </ul>
+            <section>
+                <h4>Programming in a Web Environment</h4>
+                <ul>
+                    <li class="fragment">Single Threaded Applications</li>
+                    <li class="fragment">Synchronous Behavior</li>
+                    <li class="fragment">Asynchronous Behavior</li>
+                    <li class="fragment">AJAX and WebSockets</li>
+                    <li class="fragment">API Driven Development</li>
+                    <li class="fragment">Graceful Degredation</li>
+                    <li class="fragment">Progressive Enhancement</li>
+                    <li class="fragment">Hacking Performance</li>
+                </ul>
+            </section>
+            <section>
+                <h4>Single Threaded Applications</h4>
+                <p>Web applications are "mostly" limited to a single threaded environment.</p>
+                <p>All of your code, and all the rest of the code on a page, runs on a single blocking thread.</p>
+                <p>Some modern features (WebGL, CSS Transitions) greatly improve single threaded performance.</p>
+                <p>Some tricks (using document fragments, caching) are also used to improve performance.</p>
+            </section>
+            <section data-markdown>
+                <script type="text/template">
+                    ####Don't Block me Bro
+                    Writing a javascript server as part of your web application is a horrible idea.
+                    ```javascript
+                    (function dontDoThis () {
+                        var editor = document.getElementById('editor'),
+                            cachedContents = '';
+                            
+                        while (true) {
+                            if( editor.innerHTML !== cachedContents) {
+                                sendContentsToServer(editor.innerHTML);
+                                cachedContents = editor.innerHTML;
+                            }
+                        }
+                    }());
+                    ```
+                </script>
+            </section>
+            <section>
+                <h4>Don't Block me Bro</h4>
+                <p></p>
+            </section>
+            
         </section>
     </div>
 </div>
