@@ -405,11 +405,66 @@
                     ```
                 </script>
             </section>
-            <section>
-                <h4>Don't Block me Bro</h4>
-                <p></p>
+            <section data-markdown>
+                <script type="text/template">
+                    ####Use Events instead
+                    ```javascript
+                    var editor = document.getElementById('editor');
+                        
+                    editor.onkeypress = function (event) {
+                        sendToServer({keypress : String.fromCharCode(event.keyCode)});
+                    }
+                    ```
+                </script>
             </section>
-            
+            <section data-markdown>
+                <script type="text/template">
+                    ####If you love someone, set events free.
+                    Remember, you aren't the only one using event handlers!
+                    ```javascript
+                    var editor = document.getElementById('editor');
+                    
+                    function keypressHandler (event) {
+                        sendToServer({keypress : String.fromCharCode(event.keyCode)});
+                    }
+                    
+                    editor.addEventListener('keypress', keypressHandler , false);
+                    ```
+                </script>
+            </section>
+            <section>
+                <h4>What Synchronous Means</h4>
+                <p>All function calls, including functions triggered by events, are pushing into a single callstack executed in the order they were received.</p>
+                <p>You can write code to mess with this order in a specific manner (controlled event loop), or you can use setTimeout to delay execution.</p>
+            </section>
+            <section data-markdown>
+                <script type="text/template">
+                    ####Timeouts: (what to expect when you're expecting)
+                    ```javascript
+                    function sayHello () {
+                        alert('Hello World!');
+                    }
+                    setTimeout( sayHello, 1);
+                    alert('GoodBye World!');
+                    ```
+                </script>
+            </section>
+            <section>
+                <h4>Takeaways from the previous example.</h4>
+                <p>alert (usually) pauses the thread.</p>
+                <p>your entire script finishes executing before delayed functions are processed.</p>
+                <p>A timeout of 1 millisecond does not mean your code will execute 1 millisecond later.</p>
+                <p>A timeout (usually) means your code will execute after "at least N milliseconds."</p>
+                <p>The function invoked later by setTimeout is known as a callback.</p>
+            </section>
+            <section>
+                <h4>What is a callback?</h4>
+                <p>A callback is some code you want to run later, after something else has finished executing.</p>
+            </section>
+            <section>
+                <h4>Are callbacks good?</h4>
+                <p>That depends on the circumstance, but often no.</p>
+            </section>
         </section>
     </div>
 </div>
