@@ -343,16 +343,6 @@
         <section>
             <section>
                 <h4>Programming in a Web Environment</h4>
-                <ul>
-                    <li class="fragment">Single Threaded Applications</li>
-                    <li class="fragment">Synchronous Behavior</li>
-                    <li class="fragment">Asynchronous Behavior</li>
-                    <li class="fragment">AJAX and WebSockets</li>
-                    <li class="fragment">API Driven Development</li>
-                    <li class="fragment">Graceful Degredation</li>
-                    <li class="fragment">Progressive Enhancement</li>
-                    <li class="fragment">Hacking Performance</li>
-                </ul>
             </section>
             <section>
                 <h4>Single Threaded Applications</h4>
@@ -597,12 +587,128 @@
             </section>
             <section>
                 <h4>Graceful Degredation</h4>
+                <p class="fragment">The idea that technology should support the most recent standard, but "gracefully" fallback onto older standards when needed.</p>
+                <p class="fragment">Works pretty well for HTML / CSS support.</p>
+                <p class="fragment">Was the design principle behind "APE" and "Socket.io", but has been proven a flawed approach.</p>
+            </section>
+            <section>
+                <h4>Socket.io's version of "Graceful Degredation"</h4>
+                <ul>
+                    <li class="fragment">Use Flash Socket</li>
+                    <li class="fragment">(else) use WebSockets (new)</li>
+                    <li class="fragment">(else) use WebSockets (old)</li>
+                    <li class="fragment">(else) use Long Poll Requests</li>
+                    <li class="fragment">(else) use HTTP Requests</li>
+                </ul>
+            </section>
+            <section>
+                <p>This causes problems because feature detection can take a while, can fail to ever resolve, and doesn't meet user expectations for fast connections.</p>
             </section>
             <section>
                 <h4>Progressive Enhancement</h4>
+                <p class="fragment">The idea that technology should support the most basic version, then "gradually enhance" the experience for devices supporting newer standards.</p>
+                <p class="fragment">Works really well for video, audio, and "web real-time"</p>
+                <p class="fragment">Is the design principle behind "engine.io" as well as YouTube's video player.</p>
+            </section>
+            <section>
+                <h4>Engine.io's version of "Progressive Enhancement"</h4>
+                <ul>
+                    <li class="fragment">use HTTP Requests</li>
+                    <li class="fragment">attempt Long Poll, if working use.</li>
+                    <li class="fragment">attempt old WebSockets, if working use.</li>
+                    <li class="fragment">attempt new WebSockets, if working use.</li>
+                    <li class="fragment">attempt Flash Socket, if working use.</li>
+                </ul>
             </section>
         </section>
-        
+        <section>
+            <section>
+                <h3>API Driven Development</h3>
+            </section>
+            <section>
+                <h3>What is an API?</h3>
+                <p>API stands for "application programming interface".</p>
+                <p>An API is a collection of named functions that are grouped by a "namespace"</p>
+                <p>Most of the time, an API is synonymous with a "code library"</p>
+            </section>
+            <section data-markdown>
+                <script type="text/template">
+                    ####Example code library API
+                    ```javascript
+                    //JSON is the namespace
+                    var JSON = {};
+                    
+                    //parse and stringify are named functions
+                    JSON.parse = function (data) { ... };
+                    JSON.stringify = function (data) { ... };
+                    ```
+                </script>
+            </section>
+            <section>
+                <h3>Wait, I thought an API was a collection of URLs?</h3>
+                <p class="fragment">They can be that too!</p>
+                <p class="fragment">An API is a way to expose properties or methods to a user.</p>
+                <p class="fragment">In a web based API, these properties and methods are accessd via URL instead of by invoking a function call.</p>
+            </section>
+            <section data-markdown>
+                <script type="text/template">
+                    ####Example URL based REST API setup
+                    ```javascript
+                    
+                    //the domain is the namespace
+                    var domain = 'http://example.com/api/';
+                    
+                    //resources within the api are sub-classes
+                    //sub classes are sometimes thought of as their own APIs
+                    var resource = 'documents/';
+                    
+                    //to get a specific resource we utilize an ID
+                    //typically an integer but sometimes a unique combination of letters, numbers, and symbols
+                    var uniqueIdentifier = '1/';
+                    
+                    //end points within the api correlate to named functions in our code-library
+                    var endPoint = 'comments/';
+                    
+                    //the HTTP verb is an extra parameter used indicate what we want that function to do
+                    var httpVerb = 'POST'; // ['POST','PUT','GET','DELETE','PATCH']
+                    
+                    ```
+                </script>
+            </section>
+            <section data-markdown>
+                <script type="text/template">
+                    ####Example URL based REST API setup
+                    ```javascript
+                    
+                    //Get all documents
+                    (GET) 'http://example.com/api/documents/'
+                    
+                    //Get the document with ID 1
+                    (GET) 'http://example.com/api/documents/1/'
+                    
+                    //Get all comments for the document with ID 1
+                    (GET) 'http://example.com/api/documents/1/comments/'
+                   
+                   //Get the comment with id 3 for the document with ID 1
+                    (GET) 'http://example.com/api/documents/1/comments/3/'
+                    
+                    ```
+                </script>
+            </section>
+            <section>
+                <h4>What is API Driven Development?</h4>
+                <p>In API driven development, an engineer scaffolds the functions or data an API should expose, then implements (programms) scripts to actually do so.</p>
+                <p>API driven development</p>
+                <ul>
+                    <li class="fragment">organizes code</li>
+                    <li class="fragment">makes code and code libraries more human readable</li>
+                    <li class="fragment">prevents namespace cluttering</li>
+                    <li class="fragment">helps ensure future/backwards compatible software</li>
+                    <li class="fragment">makes code behavior more quickly understood</li>
+                    <li class="fragment">helps you develop with an "iterative/agile" approach.</li>
+                </ul>
+            </section>
+        </section>
         <section>
             <h2>Part 2</h2>
             <h4 class="fragment">Programming Paradigms</h4>
