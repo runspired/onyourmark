@@ -463,7 +463,153 @@
             </section>
             <section>
                 <h4>Are callbacks good?</h4>
-                <p>That depends on the circumstance, but often no.</p>
+                <p class="fragment">That depends on the circumstance, but often no.</p>
+                <p class="fragment">Sometimes you need to execute one function on success, and another on failure.</p>
+                <p class="fragment">This is especially true when requesting data from an external location.</p>
+                <p class="fragment">The solution: promises</p>
+            </section>
+        </section>
+        <section>
+            <section>
+                <h4>Promises</h4>
+                <p>Promises are functions that execute one function on success and another function on failure.</p>
+                <p>Promises can be chained and grouped</p>
+                <p>Libraries that provide a promise feature should conform to the Promises/A+ spec.</p>
+                <p>RSVP.js is one such a library, and is used within Ember.js</p>
+            </section>
+             <section data-markdown>
+                <script type="text/template">
+                    ####Example RSVP.js promise
+                    A simple AJAX GET request implemented using an RSVP promise.
+                    ```javascript
+                    function getJSON (url) {
+                        var promise = new RSVP.Promise(function(resolve, reject){
+                            var client = new XMLHttpRequest();
+                            client.open("GET", url);
+                            client.onreadystatechange = handler;
+                            client.responseType = "json";
+                            client.setRequestHeader("Accept", "application/json");
+                            client.send();
+                        
+                            function handler() {
+                              if (this.readyState === this.DONE) {
+                                if (this.status === 200) { resolve(this.response); }
+                                else { reject(this); }
+                              }
+                            };
+                      });
+                      return promise;
+                    }
+                    ```
+                </script>
+            </section>
+            <section data-markdown>
+                <script type="text/template">
+                    ####Fulfilling Promises
+                    ```javascript
+                    getJSON('http://example.com/api/json/somedata')
+                        .then(
+                            function (data) { return JSON.parse(data); },
+                            function (error) { alert('error'); }
+                            );
+                    ```
+                </script>
+            </section>
+            <section data-markdown>
+                <script type="text/template">
+                    ####Chaining Promises
+                    ```javascript
+                    var comments = getJSON('http://example.com/api/json/document/1/')
+                        .then(
+                            function (data) {
+                                var documentData = JSON.parse(data);
+                                return getJSON(documentData.comments_uri); },
+                            function (error) { alert('could not retrieve document data'); }
+                            )
+                        .then(
+                            function (comments) { return JSON.parse(comments); },
+                            function (error) { alert('could not retrieve document comments'); }
+                            )
+                        .catch(
+                            function (error) { alert('could not parse comment data'); }
+                        );
+                    ```
+                </script>
+            </section>
+            <section>
+                <h4>Promise Arrays</h4>
+                <p>Sometimes you have a collection of unrelated promises for which you need to ensure all succeed.</p>
+                <p>Sometimes you will want these promises executed in a particular order.</p>
+            </section>
+            <section data-markdown>
+                <script type="text/template">
+                    ####Promise Arrays : .all()
+                    ```javascript
+                    var promises = [2, 3, 5, 7, 11, 13].map(function(id){
+                          return getJSON("/post/" + id + ".json");
+                        });
+                        
+                        RSVP.all(promises).then(function(posts) {
+                          // posts contains an array of results for the given promises
+                        }).catch(function(reason){
+                          // if any of the promises fails.
+                        });
+                    ```
+                </script>
+            </section>
+             <section data-markdown>
+                <script type="text/template">
+                    ####Promise Arrays : .hash()
+                    ```javascript
+                    var promises = {
+                      posts: getJSON("/posts.json"),
+                      users: getJSON("/users.json")
+                    };
+                    
+                    RSVP.hash(promises).then(function(results) {
+                      console.log(results.users) // print the users.json results
+                      console.log(results.posts) // print the posts.json results
+                    });
+                    ```
+                </script>
+            </section>
+        </section>
+        <section>
+            <section>
+                <h4>Asynchronous Programming</h4>
+                <p class="fragment">Events, Callbacks, setTimeout, Promises, and AJAX collectively make up "asynchronous behavior".</p>
+                <p class="fragment">The web is driven by asynchronous behavior; AJAX is an acronym for...</p>
+                <p class="fragment">Asynchronous JavaScript and XML (AJAX)</p>
+            </section>
+            <section>
+                <h4>Transports and "RealTime"</h4>
+                <p class="fragment">AJAX Requests typically utilize a basic HTTP request to send or retrieve data.</p>
+                <p class="fragment">Basic HTTP requests have a connection that closes quickly and cannot handle much data.</p>
+                <p class="fragment">Other request types involve HTTP Long-poll, WebSockets, and Flash Sockets.</p>
+                <p class="fragment">Most "real-time" applications utilize all four request types in order to support all browser environments.</p>
+            </section>
+            <section>
+                <h4>Keyterms Defined</h4>
+                <p>TCP/IP: </p>
+                <p class="fragment">Socket: </p>
+                <p class="fragment">Port: </p>
+                <p class="fragment">HTTP: (Hyper Text Transfer Protocol).</p>
+            </section>
+            <section>
+                <h4>HTTP Long-Poll</h4>
+                <p>Essentially the HTTP connection gets held open longer so that it can be reused and more data sent through as it becomes ready.</p>
+                <p>HTTP and HTTP Long-Poll real time solutions involve a constant stream of new HTTP requests to ensure that one connection is always present as soon as the previous connection closes.</p>
+            </section>
+            <section>
+                <h4>Flash Sockets</h4>
+                <p>The Java based Flash plugin offers a socket API allowing for streaming.  Where available, flash sockets are the most stable and reliable transport.</p>
+                <p>Concerns about Java and Flash security as a whole mean that this transport option is often under-utilized.</p>
+                <p>Custom Java plugins and applets can provide sockets as well, but these would need to be installed by the end user.</p>
+            </section>
+            <section>
+                <h4>WebSockets</h4>
+                <p>WebSockets are a new browser API that allows for a "socket-like" transport.</p>
+                <p>WebSockets aren't widely supported yet, but most modern browsers have a stable enough implementation for us to utilize them extensively.</p>
             </section>
         </section>
     </div>
