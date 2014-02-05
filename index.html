@@ -59,16 +59,27 @@
                     ```
                 </script>
             </section>
+            <section data-markdown>
+            <script type="text/template">
+                    #### Our object now looks like this
+                    ```javascript
+                    {
+                        firstname : 'Chris',
+                        lastname : 'Thoburn',
+                        fullname : 'Chris Thoburn'
+                    }
+                    ```
+                </script>
+            </section>
             <section>
                 <p>Basic objects are used often, but aren't actually that useful.</p>
-                <p>Most applications eventually need reusable object templates.</p>
-                <p>Some applications also need to be able to know when an object's property changes.</p>
+                <p class="fragment">Most applications eventually need reusable object templates.</p>
+                <p class="fragment">Some applications also need to be able to know when an object's property changes.</p>
             </section>
             <section data-markdown>
                 <script type="text/template">
                     #### A Re-usable Javascript Object
                     ```javascript
-                    //curly brackets denote an object
                     var User = function () {
                             this.firstname = '';
                             this.lastname = '';
@@ -126,6 +137,40 @@
                     User.prototype.fullname = function () {
                        return (this.firstname ? this.firstname + ' ' : '') + this.lastname;
                     };
+                    
+                    ```
+                </script>
+            </section>
+            <section data-markdown>
+                <script type="text/template">
+                    #### User now looks like
+                    ```javascript
+                    function (initialValues) {
+                        
+                            initialValues = initialValues || {};
+                        
+                            this.firstname = initialValues.firstname || '';
+                            this.lastname = initialValues.lastname || '';
+                            
+                            this.fullname = function () {
+                                return (this.firstname ? this.firstname + ' ' : '') + this.lastname;
+                            }
+                        }
+                    ```
+                </script>
+            </section>
+            <section data-markdown>
+                <script type="text/template">
+                    #### A User Instance
+                    ```javascript
+                    var me = new User({firstname : 'Chris', lastname : 'Thoburn'});
+                    
+                    //results in
+                    {
+                        firstname : 'Chris',
+                        lastname : 'Thoburn',
+                        fullname : function () { ... } //returns "Chris Thoburn"
+                    }
                     
                     ```
                 </script>
