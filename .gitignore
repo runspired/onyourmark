@@ -1,0 +1,13 @@
+*.pyc
+*.bak
+*~
+*.log
+*.dbg
+* - Copy
+.DS_Store
+.idea
+archives
+backups
+.sass-cache
+node_modules
+.tmp

@@ -1,0 +1,35 @@
+<div id="login">
+   
+    <div class="loginForm">
+
+        <div class="inputItem">
+            <label class="inputAddOn">Email Address</label>
+
+            {{view WDD.TextField
+            type="text"
+            autofocus="autofocus"
+            class="inputAddOn inputField"
+            name="name"
+            value=session.username
+            placeholder="Enter Your Email Address"}}
+
+        </div>
+        <div class="inputItem">
+            <label class="inputAddOn">Password</label>
+
+            {{view WDD.TextField
+            action="login"
+            type="password"
+            class="inputAddOn inputField"
+            name="name"
+            value=session.password
+            placeholder="Enter Your Password"}}
+
+        </div>
+
+        <div class="formRow">
+            <button class="button" id="loginButton" {{action "login"}} value="Log In">Log In</button>
+        </div>
+
+    </div>
+</div>

@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<!--  {% verbatim %} -->
+<html lang="en-US" id="index" itemscope itemtype="http://schema.org/WebPage">
+<head>
+
+    <!-- guts -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>NPV Advisors | Nexus</title>
+
+    <!-- Web Friendly / Open Graph / Google+ -->
+
+    <link rel="image_src" href="static/ember/resources/npv.mark.jpg">
+    <link rel="shortcut icon" href="static/ember/resources/logo.png">
+    <meta name="keywords" content="Nexus management advisors appraisal jobs portfolio client">
+
+    <meta itemprop="name" content="NPV Advisors | Nexus">
+    <meta itemprop="description" content="Internal Nexus management webapp for NPV Advisors.">
+    <meta itemprop="image" content="static/ember/resources/npv.mark.jpg">
+
+
+    <meta property="og:title" content="NPV Advisors | Nexus">
+    <meta property="og:type" content="Website">
+    <meta property="og:url" content="http://npvadvisors.com">
+    <meta property="og:image" content="resources/npv.mark.jpg">
+    <meta name="description" property="og:description" content="Internal nexus management webapp for NPV Advisors.">
+    <meta property="og:determiner" content="">
+    <meta property="og:locale" content="en_US">
+    <meta property="og:site_name" content="NPV Nexus">
+
+    <!-- Signature -->
+    <meta name="designer" content="© Copyright 2013 National Property Valuation Advisors, Inc. http://npvadvisors.com">
+
+    <!-- Syncronous Header Resources-->
+    <link rel="stylesheet" type="text/css" href="/static/app/css/main.css">
+    <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Lato:100,300,400,700|Inder">
+    <script type="text/javascript" src="/static/app/bower_components/jquery/jquery.min.js"></script>
+
+
+    <!-- Asynchronous Resources -->
+    <script type="text/javascript">
+
+        //https://github.com/jthoburn/asyncInclude
+        window.asyncInclude = new function (){function j(a,c,f,k,d){var h=e();!h&&("css"==k||!window.hasOwnProperty(f))?(b.push({s:a,m:"WAITING",c:c,g:f,t:k,d:d}),g.ready()&&("js"==k?l(e()):n(e()))):h&&(h.m+=" REJECTED")}function n(a){var c=document.createElement("link");c.type="text/css";c.rel="stylesheet";c.href=p(a.s);d[0].parentNode.insertBefore(c,d[0]);a.m+=" LOADING";c.onload=function(){a.m+=" OK";a.c&&a.c()}}function l(a){if(window.hasOwnProperty(a.g))a.m+="PRE-EXISTING";else{var c=document.createElement("script");
+            c.type="text/javascript";c.async=!0;c.src=p(a.s);d[0].parentNode.insertBefore(c,d[0]);a.m+=" LOADING";c.onload=function(){a.m+=" OK";a.c&&a.c()}}}function r(a){if(a.d){var c=function(){for(var f=a.d.length,b=!0;f--;)window.hasOwnProperty(a.d[f])||(b=!1);b?l(a):setTimeout(function(){c()},20)};c()}else l(a)}function e(){for(var a=b.length;a--;)if(b[a].s==a)return b[a];return!1}function p(a){return!a.indexOf("http:")?a:a.replace("http:","https:")}function q(a){!g.ready()?setTimeout(function(){q(a)},
+                15):a()}var g=this,b=[],d=document.getElementsByTagName("script");g.ready=function(){return!/in/.test(document.readyState)};g.status=function(a){if(!a)return b;for(var c=b.length;c--;)if(b[c].s==a)return b[c].m};for(var m=d.length;m--;)""!=d[m].src&&!e()&&(j(d[m].src,!1,"","js",!1),e().m="PRE-EXISTING");g.include=function(a,c,b,d,e){if("[object Array]"==Object.prototype.toString.call(a)){c=a.length;for(b=0;b<c;b++)j(a[b][0],a[b][1],a[b][2],a[b][3],a[b][4])}else j(a,c,b,d,e)};q(function(){var a=b.length;
+            for(i=0;i<a;i++)-1===b[i].m.indexOf("LOADING")&&("js"==b[i].t?r(b[i]):n(b[i]))})};
+
+        var filePath = window.location.port === '9000' ? '' : '/static/app';
+
+        window.asyncInclude.include([
+            [ filePath + '/dist/package/bower-components.js',false,'Ember','js',["jQuery"]],
+            [ filePath + '/dist/package/compiled-templates.js',false,'','js', ["Ember"]],
+            [ filePath + '/dist/package/combined-scripts.js',false,'Nexus','js',["jQuery", "Ember"]]
+        ]);
+    </script>
+
+    <script type="text/javascript">
+        /*
+         Logo Animation
+         (I'll likely make this a CSS animation when I get the time)
+         */
+        (function(){
+
+            var TIME = 300;
+
+            function animateIt(e,i,heightAdjust,A,c,status,dark) {
+
+
+                var    base    =    .18
+                        ,    r    =    dark? 55 : 0
+                        ,    g    =    dark? 55 : 121
+                        ,    b    =    dark? 55 : 193
+                        ,    d1 = dark? 75 : 115
+                        ,    d2 = dark? 75 : 64
+                        ,    d3 = dark? 75 : 47
+
+                        ,    differential    =    .2
+                        ,    lastIndex = A.length - 1
+                        ,    h = (base+heightAdjust[i])
+                        ,    cp = (1-heightAdjust[i] / differential)/2
+                        ,    rgb = 'rgb('+Math.round(r+d1*cp)+','+Math.round(g+d2*cp)+','+Math.round(b+d3*cp)+')'
+                        ,    p = heightAdjust[(i? i -1 : lastIndex)]
+                        ,    t = TIME * Math.abs(heightAdjust[i]-p)/ differential
+                        ;
+
+                if( i == lastIndex ) {
+                    var first = heightAdjust.splice(0,1);
+                    heightAdjust.push(first[0]);
+                    e.animate({height:''+h+'em'},t, (function(){
+                        e.css('background',rgb);
+                        waveIt( A , c, heightAdjust ,status, dark);
+                    }));
+                }
+                else
+                    e.animate({height:''+h+'em'},t , (function(){ e.css('background',rgb); }) );
+            };
+
+            function waveIt(cols, count, heightAdjust,status, dark) {
+                if( count-- )
+                    cols.each(function(i){
+                        animateIt( jQuery(this), i , heightAdjust, cols , count ,status, dark );
+                    });
+            };
+
+            this.animateLogo = function(e,x) {
+
+                x = x || 1;
+
+                var heightAdjust = [0, 0.01, 0.02, 0.04, 0.07, 0.12, 0.20, 0.18, 0.15, 0.10],
+                    status = jQuery(e).find('.logo-status'),
+                    count = (x*10)+1,
+                    t= TIME*(x*5+1) / 4,
+                    dark = e.closest('.logo').hasClass('dark');
+
+                waveIt(  jQuery(e).find('.logo-column') , count, heightAdjust ,status ,dark);
+
+                status.css('background','rgb( 83,181,106)');
+                status.animate({'left':'.44em'},t,(function(){ status.animate({'left':'0em'},t,(function(){ status.css('background',''); })); }));
+
+            };
+
+        })();
+    </script>
+
+</head>
+<body>
+
+
+<!-- initial loading screen while Ember initializes-->
+<div id="loading">
+    <div class="loadingContent">
+        <div class="logo">
+            <div class="logoIcon">
+                <div class="logo-columns">
+                    <div class="logo-column logo-column-1"></div>
+                    <div class="logo-column logo-column-2"></div>
+                    <div class="logo-column logo-column-3"></div>
+                    <div class="logo-column logo-column-4"></div>
+                    <div class="logo-column logo-column-5"></div>
+                    <div class="logo-column logo-column-6"></div>
+                    <div class="logo-column logo-column-7"></div>
+                    <div class="logo-column logo-column-8"></div>
+                    <div class="logo-column logo-column-9"></div>
+                    <div class="logo-column logo-column-10"></div>
+                </div>
+                <div class="logo-base"><div class="logo-status"></div></div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    jQuery().ready(function(){
+        animateLogo(jQuery('#loading .logo'),  10);
+    });
+</script>
+
+
+
+
+
+
+<!-- Nexus Constants -->
+<script type="text/javascript">
+
+    var NEXUS_FIXTURES = {};
+
+    /*
+        Name the fixtures with the same name as
+        the model of what is being pre-loaded, pluralized
+
+        camelCase as needed with first letter lowercase.
+     */
+
+//{% endverbatim %}
+    NEXUS_FIXTURES.offices = JSON.parse("{{ office_json|escapejs}}");
+//{% verbatim %}
+</script>
+
+
+
+</body>
+<!-- {% endverbatim %} -->
+</html>

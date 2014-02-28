@@ -1,0 +1,10 @@
+<div class="noteEntry">
+    <label class="textarea" {{bind-attr for=view.name}}>{{view.labelText}}
+        {{view Nexus.helpText value=view.helpText}}
+    </label>
+    {{textarea name=view.name class="clearfix" value=view.content}}
+</div>
+<div class="notePreview markdown">
+    {{markdown view.content}}
+</div>
+<div class="clearAll"></div>

@@ -1,0 +1,42 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Mocha Spec Runner</title>
+    <link rel="stylesheet" href="bower_components/mocha/mocha.css">
+</head>
+<body>
+    <div id="mocha"></div>
+
+    <script src="bower_components/mocha/mocha.js"></script>
+    <script>mocha.setup('bdd')</script>
+
+    <script src="bower_components/chai/chai.js"></script>
+    <script>
+        var assert = chai.assert;
+        var expect = chai.expect;
+        var should = chai.should();
+    </script>
+
+    <!-- include source files here... -->
+    <script src="../js/wombat.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../js/apple.js" type="text/javascript" charset="utf-8"></script>
+
+    <!-- include spec files here... -->
+    <script src="spec/apple.js"></script>
+    <script src="spec/wombat.js"></script>
+
+    <script type="text/javascript" charset="utf-8">
+        // If tests run in a real browser
+        // Can alternatively do a check on window.PHANTOMJS
+        if (navigator.userAgent.indexOf('PhantomJS') < 0) {
+            mocha.globals(['Wombat', 'Apple']).run();
+        } else if(window.mochaPhantomJS) {
+            window.mochaPhantomJS.run();
+        } else {
+            console.log('hmm... no mocha phantom was found');
+        }
+    </script>
+</body>
+</html>
