@@ -1,0 +1,999 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Ember</title>
+    <script type="text/javascript" src="http://lab.hakim.se/reveal-js/js/reveal.min.js"></script>
+    <script type="text/javascript" src="http://lab.hakim.se/reveal-js/lib/js/head.min.js"></script>
+    <link rel="stylesheet" href="http://lab.hakim.se/reveal-js/lib/css/zenburn.css">
+    <link rel="stylesheet" href="http://lab.hakim.se/reveal-js/css/theme/default.css">
+    <link rel="stylesheet" href="http://lab.hakim.se/reveal-js/css/reveal.min.css">
+</head>
+<body>
+<div class="reveal">
+<div class="slides">
+<section>
+    <h2>From Noob To Launch</h2>
+    <h4 class="fragment">An introduction to radid web application prototyping with Ember and Firebase</h4>
+</section>
+<section>
+    <h3>Overview</h3>
+    <ul>
+        <li>Part 1: Javascript and Web Programming</li>
+        <li>Part 2: Programming Paradigms</li>
+        <li>Part 3: On Your Mark (a multi-user real-time markdown editor)</li>
+    </ul>
+</section>
+
+<section>
+    <h2>Part 1</h2>
+    <h4 class="fragment">Javascript and Web Programming</h4>
+</section>
+<section>
+<section>
+    <h2>What is Javascript?</h2>
+    <p class="fragment">Javascript is a dynamically typed scripting language most commonly used for web application development.</p>
+    <p class="fragment">In Javascript, everything is an object, and all objects are passed by reference.</p>
+</section>
+<section>
+    <h2>What is an Object?</h2>
+    <p class="fragment">In the most abstract sense, an object is a constant pointer to specific memory.</p>
+    <p class="fragment">In usage, an object is a collection of properties: key : value pairs for specific data.</p>
+    <p class="fragment">Some properties are actually functions, known as methods.</p>
+</section>
+<section data-markdown>
+    <script type="text/template">
+        #### A Basic Javascript Object
+        ```javascript
+        //curly brackets denote an object
+        var User = {
+        firstname : '',
+        lastname : ''
+        };
+
+        User.firstname = "Chris";
+        User.lastname = "Thoburn";
+
+        //creates a new fullname property and sets it's value
+        User.fullname = "Chris Thoburn";
+
+        ```
+    </script>
+</section>
+<section data-markdown>
+    <script type="text/template">
+        #### Our object now looks like this
+        ```javascript
+        {
+        firstname : 'Chris',
+        lastname : 'Thoburn',
+        fullname : 'Chris Thoburn'
+        }
+        ```
+    </script>
+</section>
+<section>
+    <p>Basic objects are used often, but aren't actually that useful.</p>
+    <p class="fragment">Most applications eventually need reusable object templates.</p>
+    <p class="fragment">Some applications also need to be able to know when an object's property changes.</p>
+</section>
+<section data-markdown>
+    <script type="text/template">
+        #### A Re-usable Javascript Object
+        ```javascript
+        var User = function () {
+        this.firstname = '';
+        this.lastname = '';
+        },
+        me = null;
+
+        //this is just a copy to the same "object factory"
+        me = User;
+
+        //this doesn't work as nothing is returned from the constructor function
+        me = User();
+
+        //this creates a new instance of User
+        me = new User();
+        me.firstname = "Chris";
+        me.lastname = "Thoburn";
+
+        ```
+    </script>
+</section>
+<section data-markdown>
+    <script type="text/template">
+        #### A Re-usable Javascript Object with initialization
+        ```javascript
+
+        var User = function (initialValues) {
+
+        initialValues = initialValues || {};
+
+        this.firstname = initialValues.firstname || '';
+        this.lastname = initialValues.lastname || '';
+
+        },
+        me = null;
+
+        me = new User({firstname: 'Chris', lastname : 'Thoburn'});
+
+        ```
+    </script>
+</section>
+<section data-markdown>
+    <script type="text/template">
+        #### Object Methods
+        ```javascript
+
+        //same User object as before
+        me = new User();
+
+        //defines a new fullname method on this instance only
+        me.fullname = function () {
+        return this.firstname + ' ' + this.lastname;
+        };
+
+        //define a method on all instances of User now and in the future
+        User.prototype.fullname = function () {
+        return (this.firstname ? this.firstname + ' ' : '') + this.lastname;
+        };
+
+        ```
+    </script>
+</section>
+<section data-markdown>
+    <script type="text/template">
+        #### User now looks like
+        ```javascript
+        function (initialValues) {
+
+        initialValues = initialValues || {};
+
+        this.firstname = initialValues.firstname || '';
+        this.lastname = initialValues.lastname || '';
+
+        this.fullname = function () {
+        return (this.firstname ? this.firstname + ' ' : '') + this.lastname;
+        }
+        }
+        ```
+    </script>
+</section>
+<section data-markdown>
+    <script type="text/template">
+        #### A User Instance
+        ```javascript
+        var me = new User({firstname : 'Chris', lastname : 'Thoburn'});
+
+        //results in
+        {
+        firstname : 'Chris',
+        lastname : 'Thoburn',
+        fullname : function () { ... } //returns "Chris Thoburn"
+        }
+
+        ```
+    </script>
+</section>
+<section>
+    <p>Sometimes you need more advanced behavior from your properties</p>
+    <ul>
+        <li class="fragment">Execute code when a value changes</li>
+        <li class="fragment">Controlled Access</li>
+    </ul>
+</section>
+<section data-markdown>
+    <script type="text/template">
+        #### Advanced Properties
+        ```javascript
+
+        Object.defineProperty (User, 'age', {
+        get : function () {
+        var birthday = value,
+        today = new Date(),
+        age = 0;
+
+        age = today.getYear() - birthday.getYear();
+
+        //adjust based on whether the date has passed yet
+        today.setFullYear(birthday.getFullYear());
+        if (today - birthday < 0) {
+        age--;
+        }
+        return age;
+        },
+        ...
+        });
+
+        ```
+    </script>
+</section>
+<section data-markdown>
+    <script type="text/template">
+        #### Advanced Properties
+        ```javascript
+
+        Object.defineProperty (User, 'age', {
+        ...
+        set : function (date) {
+        if (date instanceof Date) {
+        value = Date;
+        } else {
+        value = new Date(date);
+        }
+        },
+        });
+
+        ```
+    </script>
+</section>
+<section data-markdown>
+    <script type="text/template">
+        #### Functions
+        ```javascript
+
+        var stringify = function (anArray) {
+        return typeof anArray === 'string' ? anArray.join(' ') || '';
+        };
+
+        function stringify (anArray) {
+        return typeof anArray === 'string' ? anArray.join(' ') || '';
+        };
+        ```
+    </script>
+</section>
+<section data-markdown>
+    <script type="text/template">
+        #### Function Arguments
+        ```javascript
+
+        var stringify = function () {
+
+        var newString = '',
+        index = arguments.length;
+
+        arguments.reverse();
+
+        while (index--) {
+
+        if( typeof arguments[index] === 'array') {
+        arguments[index] = arguments[index].join(' ');
+        }
+        }
+        return arguments.join(' ');;
+        };
+
+        ```
+    </script>
+</section>
+<section data-markdown>
+    <script type="text/template">
+        #### Functions that don't return.
+        ```javascript
+
+        var count = 0;
+
+        function incrementCount () {
+        count += 1;
+        };
+
+        ```
+    </script>
+</section>
+</section>
+<section>
+    <section>
+        <h4>Variable Scope</h4>
+        <p>Javascript applications typically have three scopes to consider.</p>
+        <ul>
+            <li class="fragment">Global (e.g. window)</li>
+        </ul>
+    </section>
+    <section data-markdown>
+        <script type="text/template">
+            #### Variable Scope - Global
+            ```javascript
+
+            //count is in the global scope
+            //only because we don't have a more localized scope.
+            var count = 0;
+
+            //otherCount is also in the global scope.
+            otherCount = 0;
+
+            //in web browsers, window is a reference to the topmost scope
+            //in the given document.
+            window.count = 0;
+
+            ```
+        </script>
+    </section>
+    <section>
+        <h4>Variable Scope</h4>
+        <p>Javascript applications typically have three scopes to consider.</p>
+        <ul>
+            <li>Global (e.g. window)</li>
+            <li>Closure</li>
+        </ul>
+    </section>
+    <section data-markdown>
+        <script type="text/template">
+            #### Variable Scope - Closures
+            ```javascript
+
+            //global
+            count = 0;
+            (function () {
+            //closure
+            var count = 1;
+
+            //this is the parent scope here
+            this.sayCount = function () {
+            return count;
+            };
+            })();
+
+            //alerts 0
+            alert(count);
+
+            //alerts 1
+            alert( this.sayCount );
+            ```
+        </script>
+    </section>
+    <section>
+        <h4>Variable Scope</h4>
+        <p>Javascript applications typically have three scopes to consider.</p>
+        <ul>
+            <li>Global (e.g. window)</li>
+            <li>Closure</li>
+            <li>Local</li>
+        </ul>
+    </section>
+    <section data-markdown>
+        <script type="text/template">
+            #### Variable Scope - Local
+            ```javascript
+
+            //global
+            count = 0;
+            (function () {
+            //closure
+            var count = 1;
+
+            //this is the parent scope here
+            this.sayCount = function () {
+            return count;
+            };
+
+            this.getCount = function () {
+            var count = 2;
+            return count;
+            }
+
+            })();
+
+            //alerts 0
+            alert(count);
+
+            //alerts 1
+            alert( this.sayCount );
+
+            //alerts 2
+            alert( this.getCount );
+            ```
+        </script>
+    </section>
+</section>
+<section>
+    <section>
+        <h4>Function Methods</h4>
+    </section>
+    <section>
+        <p>I mentioned that functions are objects too.  This means that functions also have properties and methods.</p>
+        <p class="fragment">We say this above with closures and reusable objects, both of which utilized a function wrapper.</p>
+        <p class="fragment">Three function methods you should know about: .call(), .apply() and .bind()</p>
+    </section>
+    <section data-markdown>
+        <script type="text/template">
+            #### function.call()
+            ```javascript
+
+            function appendToString() {
+            var length = arguments.length, index;
+            for (index = 0; index < length; index++)
+            this.value += ' ' + arguments[index];
+            };
+
+            var aString = {value : ''};
+            appendToString.call(aString, 'Hello', 'there', 'world!');
+
+            console.log(aString.value); //prints "Hello there world!"
+            ```
+        </script>
+    </section>
+    <section data-markdown>
+        <script type="text/template">
+            #### function.apply()
+            ```javascript
+
+            function appendToString() {
+            var length = arguments.length, index;
+            for (index = 0; index < length; index++)
+            this.value += ' ' + arguments[index];
+            };
+
+            var aString = {value : ''},
+            stringFragments = ['Hello', 'there', 'world!'];
+
+            appendToString.apply(aString, stringFragments);
+
+            console.log(aString.value); //also prints "Hello there world!"
+            ```
+        </script>
+    </section>
+    <section data-markdown>
+        <script type="text/template">
+            #### function.bind()
+            ```javascript
+
+            function appendToString() {
+            var length = arguments.length, index;
+            for (index = 0; index < length; index++)
+            this.value += ' ' + arguments[index];
+            };
+
+            var aString = {value : ''},
+            logString = appendToString.bind(aString);
+
+            logString('Hello');
+            logString('World');
+
+            console.log(aString.value); //also prints "Hello World"
+            ```
+        </script>
+    </section>
+</section>
+<section>
+    <section>
+        <h4>Programming in a Web Environment</h4>
+    </section>
+    <section>
+        <h4>Single Threaded Applications</h4>
+        <p>Web applications are "mostly" limited to a single threaded environment.</p>
+        <p>All of your code, and all the rest of the code on a page, runs on a single blocking thread.</p>
+        <p>Some modern features (WebGL, CSS Transitions) greatly improve single threaded performance.</p>
+        <p>Some tricks (using document fragments, caching) are also used to improve performance.</p>
+    </section>
+    <section data-markdown>
+        <script type="text/template">
+            ####Don't Block me Bro
+            Writing a javascript server as part of your web application is a horrible idea.
+            ```javascript
+            (function dontDoThis () {
+            var editor = document.getElementById('editor'),
+            cachedContents = '';
+
+            while (true) {
+            if( editor.innerHTML !== cachedContents) {
+            sendContentsToServer(editor.innerHTML);
+            cachedContents = editor.innerHTML;
+            }
+            }
+            }());
+            ```
+        </script>
+    </section>
+    <section data-markdown>
+        <script type="text/template">
+            ####Use Events instead
+            ```javascript
+            var editor = document.getElementById('editor');
+
+            editor.onkeypress = function (event) {
+            sendToServer({keypress : String.fromCharCode(event.keyCode)});
+            }
+            ```
+        </script>
+    </section>
+    <section data-markdown>
+        <script type="text/template">
+            ####If you love someone, set events free.
+            Remember, you aren't the only one using event handlers!
+            ```javascript
+            var editor = document.getElementById('editor');
+
+            function keypressHandler (event) {
+            sendToServer({keypress : String.fromCharCode(event.keyCode)});
+            }
+
+            editor.addEventListener('keypress', keypressHandler , false);
+            ```
+        </script>
+    </section>
+    <section>
+        <h4>What Synchronous Means</h4>
+        <p>All function calls, including functions triggered by events, are pushing into a single callstack executed in the order they were received.</p>
+        <p>You can write code to mess with this order in a specific manner (controlled event loop), or you can use setTimeout to delay execution.</p>
+    </section>
+    <section data-markdown>
+        <script type="text/template">
+            ####Timeouts: (what to expect when you're expecting)
+            ```javascript
+            function sayHello () {
+            alert('Hello World!');
+            }
+            setTimeout( sayHello, 1);
+            alert('GoodBye World!');
+            ```
+        </script>
+    </section>
+    <section>
+        <h4>Takeaways from the previous example.</h4>
+        <p>alert (usually) pauses the thread.</p>
+        <p>your entire script finishes executing before delayed functions are processed.</p>
+        <p>A timeout of 1 millisecond does not mean your code will execute 1 millisecond later.</p>
+        <p>A timeout (usually) means your code will execute after "at least N milliseconds."</p>
+        <p>The function invoked later by setTimeout is known as a callback.</p>
+    </section>
+    <section>
+        <h4>What is a callback?</h4>
+        <p>A callback is some code you want to run later, after something else has finished executing.</p>
+    </section>
+    <section>
+        <h4>Are callbacks good?</h4>
+        <p class="fragment">That depends on the circumstance, but often no.</p>
+        <p class="fragment">Sometimes you need to execute one function on success, and another on failure.</p>
+        <p class="fragment">This is especially true when requesting data from an external location.</p>
+        <p class="fragment">The solution: promises</p>
+    </section>
+</section>
+<section>
+    <section>
+        <h4>Promises</h4>
+        <p>Promises are functions that execute one function on success and another function on failure.</p>
+        <p>Promises can be chained and grouped</p>
+        <p>Libraries that provide a promise feature should conform to the Promises/A+ spec.</p>
+        <p>RSVP.js is one such a library, and is used within Ember.js</p>
+    </section>
+    <section data-markdown>
+        <script type="text/template">
+            ####Example RSVP.js promise
+            A simple AJAX GET request implemented using an RSVP promise.
+            ```javascript
+            function getJSON (url) {
+            var promise = new RSVP.Promise(function(resolve, reject){
+            var client = new XMLHttpRequest();
+            client.open("GET", url);
+            client.onreadystatechange = handler;
+            client.responseType = "json";
+            client.setRequestHeader("Accept", "application/json");
+            client.send();
+
+            function handler() {
+            if (this.readyState === this.DONE) {
+            if (this.status === 200) { resolve(this.response); }
+            else { reject(this); }
+            }
+            };
+            });
+            return promise;
+            }
+            ```
+        </script>
+    </section>
+    <section data-markdown>
+        <script type="text/template">
+            ####Fulfilling Promises
+            ```javascript
+            getJSON('http://example.com/api/json/somedata')
+            .then(
+            function (data) { return JSON.parse(data); },
+            function (error) { alert('error'); }
+            );
+            ```
+        </script>
+    </section>
+    <section data-markdown>
+        <script type="text/template">
+            ####Chaining Promises
+            ```javascript
+            var comments = getJSON('http://example.com/api/json/document/1/')
+            .then(
+            function (data) {
+            var documentData = JSON.parse(data);
+            return getJSON(documentData.comments_uri); },
+            function (error) { alert('could not retrieve document data'); }
+            )
+            .then(
+            function (comments) { return JSON.parse(comments); },
+            function (error) { alert('could not retrieve document comments'); }
+            )
+            .catch(
+            function (error) { alert('could not parse comment data'); }
+            );
+            ```
+        </script>
+    </section>
+    <section>
+        <h4>Promise Arrays</h4>
+        <p>Sometimes you have a collection of unrelated promises for which you need to ensure all succeed.</p>
+        <p>Sometimes you will want these promises executed in a particular order.</p>
+    </section>
+    <section data-markdown>
+        <script type="text/template">
+            ####Promise Arrays : .all()
+            ```javascript
+            var promises = [2, 3, 5, 7, 11, 13].map(function(id){
+            return getJSON("/post/" + id + ".json");
+            });
+
+            RSVP.all(promises).then(function(posts) {
+            // posts contains an array of results for the given promises
+            }).catch(function(reason){
+            // if any of the promises fails.
+            });
+            ```
+        </script>
+    </section>
+    <section data-markdown>
+        <script type="text/template">
+            ####Promise Arrays : .hash()
+            ```javascript
+            var promises = {
+            posts: getJSON("/posts.json"),
+            users: getJSON("/users.json")
+            };
+
+            RSVP.hash(promises).then(function(results) {
+            console.log(results.users) // print the users.json results
+            console.log(results.posts) // print the posts.json results
+            });
+            ```
+        </script>
+    </section>
+</section>
+<section>
+    <section>
+        <h4>Asynchronous Programming</h4>
+        <p class="fragment">Events, Callbacks, setTimeout, Promises, and AJAX collectively make up "asynchronous behavior".</p>
+        <p class="fragment">The web is driven by asynchronous behavior; AJAX is an acronym for...</p>
+        <p class="fragment">Asynchronous JavaScript and XML (AJAX)</p>
+    </section>
+    <section>
+        <h4>Transports and "RealTime"</h4>
+        <p class="fragment">AJAX Requests typically utilize a basic HTTP request to send or retrieve data.</p>
+        <p class="fragment">Basic HTTP requests have a connection that closes quickly and cannot handle much data.</p>
+        <p class="fragment">Other request types involve HTTP Long-poll, WebSockets, and Flash Sockets.</p>
+        <p class="fragment">Most "real-time" applications utilize all four request types in order to support all browser environments.</p>
+    </section>
+    <section>
+        <h4>Keyterms Defined</h4>
+        <p>TCP/IP: </p>
+        <p class="fragment">Socket: </p>
+        <p class="fragment">Port: </p>
+        <p class="fragment">HTTP: (Hyper Text Transfer Protocol).</p>
+    </section>
+    <section>
+        <h4>HTTP Long-Poll</h4>
+        <p>Essentially the HTTP connection gets held open longer so that it can be reused and more data sent through as it becomes ready.</p>
+        <p>HTTP and HTTP Long-Poll real time solutions involve a constant stream of new HTTP requests to ensure that one connection is always present as soon as the previous connection closes.</p>
+    </section>
+    <section>
+        <h4>Flash Sockets</h4>
+        <p>The Java based Flash plugin offers a socket API allowing for streaming.  Where available, flash sockets are the most stable and reliable transport.</p>
+        <p>Concerns about Java and Flash security as a whole mean that this transport option is often under-utilized.</p>
+        <p>Custom Java plugins and applets can provide sockets as well, but these would need to be installed by the end user.</p>
+    </section>
+    <section>
+        <h4>WebSockets</h4>
+        <p>WebSockets are a new browser API that allows for a "socket-like" transport.</p>
+        <p>WebSockets aren't widely supported yet, but most modern browsers have a stable enough implementation for us to utilize them extensively.</p>
+    </section>
+</section>
+<section>
+    <section>
+        <h4>The Web Challenge</h4>
+        <p class="fragment">Web standards, browser APIs, and browser environments are always-changing.</p>
+        <p class="fragment">What works in Javascript, HTML, and CSS today might not work tomorrow and likely didn't work yesterday.</p>
+        <p class="fragment">People do use older browsers.</p>
+        <p class="fragment">Even "modern" browsers have differing opinions on what the standards specs mean or should be, and implement them differently.</p>
+    </section>
+    <section>
+        <h4>Graceful Degredation</h4>
+        <p class="fragment">The idea that technology should support the most recent standard, but "gracefully" fallback onto older standards when needed.</p>
+        <p class="fragment">Works pretty well for HTML / CSS support.</p>
+        <p class="fragment">Was the design principle behind "APE" and "Socket.io", but has been proven a flawed approach.</p>
+    </section>
+    <section>
+        <h4>Socket.io's version of "Graceful Degredation"</h4>
+        <ul>
+            <li class="fragment">Use Flash Socket</li>
+            <li class="fragment">(else) use WebSockets (new)</li>
+            <li class="fragment">(else) use WebSockets (old)</li>
+            <li class="fragment">(else) use Long Poll Requests</li>
+            <li class="fragment">(else) use HTTP Requests</li>
+        </ul>
+    </section>
+    <section>
+        <p>This causes problems because feature detection can take a while, can fail to ever resolve, and doesn't meet user expectations for fast connections.</p>
+    </section>
+    <section>
+        <h4>Progressive Enhancement</h4>
+        <p class="fragment">The idea that technology should support the most basic version, then "gradually enhance" the experience for devices supporting newer standards.</p>
+        <p class="fragment">Works really well for video, audio, and "web real-time"</p>
+        <p class="fragment">Is the design principle behind "engine.io" as well as YouTube's video player.</p>
+    </section>
+    <section>
+        <h4>Engine.io's version of "Progressive Enhancement"</h4>
+        <ul>
+            <li class="fragment">use HTTP Requests</li>
+            <li class="fragment">attempt Long Poll, if working use.</li>
+            <li class="fragment">attempt old WebSockets, if working use.</li>
+            <li class="fragment">attempt new WebSockets, if working use.</li>
+            <li class="fragment">attempt Flash Socket, if working use.</li>
+        </ul>
+    </section>
+</section>
+<section>
+    <section>
+        <h3>API Driven Development</h3>
+    </section>
+    <section>
+        <h3>What is an API?</h3>
+        <p>API stands for "application programming interface".</p>
+        <p>An API is a collection of named functions that are grouped by a "namespace"</p>
+        <p>Most of the time, an API is synonymous with a "code library"</p>
+    </section>
+    <section data-markdown>
+        <script type="text/template">
+            ####Example code library API
+            ```javascript
+            //JSON is the namespace
+            var JSON = {};
+
+            //parse and stringify are named functions
+            JSON.parse = function (data) { ... };
+            JSON.stringify = function (data) { ... };
+            ```
+        </script>
+    </section>
+    <section>
+        <h3>Wait, I thought an API was a collection of URLs?</h3>
+        <p class="fragment">They can be that too!</p>
+        <p class="fragment">An API is a way to expose properties or methods to a user.</p>
+        <p class="fragment">In a web based API, these properties and methods are accessd via URL instead of by invoking a function call.</p>
+    </section>
+    <section data-markdown>
+        <script type="text/template">
+            ####Example URL based REST API setup
+            ```javascript
+
+            //the domain is the namespace
+            var domain = 'http://example.com/api/';
+
+            //resources within the api are sub-classes
+            //sub classes are sometimes thought of as their own APIs
+            var resource = 'documents/';
+
+            //to get a specific resource we utilize an ID
+            //typically an integer but sometimes a unique combination of letters, numbers, and symbols
+            var uniqueIdentifier = '1/';
+
+            //end points within the api correlate to named functions in our code-library
+            var endPoint = 'comments/';
+
+            //the HTTP verb is an extra parameter used indicate what we want that function to do
+            var httpVerb = 'POST'; // ['POST','PUT','GET','DELETE','PATCH']
+
+            ```
+        </script>
+    </section>
+    <section data-markdown>
+        <script type="text/template">
+            ####Example URL based REST API setup
+            ```javascript
+
+            //Get all documents
+            (GET) 'http://example.com/api/documents/'
+
+            //Get the document with ID 1
+            (GET) 'http://example.com/api/documents/1/'
+
+            //Get all comments for the document with ID 1
+            (GET) 'http://example.com/api/documents/1/comments/'
+
+            //Get the comment with id 3 for the document with ID 1
+            (GET) 'http://example.com/api/documents/1/comments/3/'
+
+            ```
+        </script>
+    </section>
+    <section>
+        <h4>What is API Driven Development?</h4>
+        <p>In API driven development, an engineer scaffolds the functions or data an API should expose, then implements (programms) scripts to actually do so.</p>
+        <p>API driven development</p>
+        <ul>
+            <li class="fragment">organizes code</li>
+            <li class="fragment">makes code and code libraries more human readable</li>
+            <li class="fragment">prevents namespace cluttering</li>
+            <li class="fragment">helps ensure future/backwards compatible software</li>
+            <li class="fragment">makes code behavior more quickly understood</li>
+            <li class="fragment">helps you develop with an "iterative/agile" approach.</li>
+        </ul>
+    </section>
+    <section>
+        <section>
+            <h3>Frameworks : You need one.</h3>
+        </section>
+        <section>
+            <h3>What is a Framework?</h3>
+            <p class="fragment">At it's most basic level, a framework is a collection of APIs that help you build applications faster.</p>
+            <p class="fragment">Framework's also help you organize your code and provide ways to build more re-usable code.</p>
+            <p class="fragment">Advanced framework's make important design decisions for you.</p>
+        </section>
+        <section>
+            <h3>Why You Need A Framework.</h3>
+            <p class="fragment">Code organization is always important.  Both Time and Scale harm projects, great organization lessens this harm and makes projects maintainable.</p>
+            <p class="fragment">What starts as a few jQuery scripts often balloons into a tangled mess.  Tangled messes are unmaintainable.  Using a framework will often help you produce more, even on smaller projects.</p>
+            <p class="fragment">Sometimes, even the simplest app can be made better with a framework.</p>
+            <p class="fragment">If you consider it a "web app" and not a "web page", then you definitely need a framework.</p>
+        </section>
+        <section>
+            <h3>Selecting A Framework</h3>
+            <p>Ideally you should know what these design decisions are, and why they are good/bad design decisions when you evaluate a framework for use in a project.</p>
+            <p>In practice, most engineers know little about the guts of the framework they use.</p>
+            <p>Use something you mostly understand, that has good documentation, strong examples, and a vibrant support community.</p>
+            <p>When it comes time for it, hire someone more experienced to make the informed framework decision.</p>
+        </section>
+        <section>
+            <h3>Why You Shouldn't Use Ember</h3>
+            <p class="fragment">Ember has good, but not great documentation. (Missing version based documentation)</p>
+            <p class="fragment">Ember has good, but conflicting examples. (Ember has changed a lot in the last few years, not everything you read is right).</p>
+            <p class="fragment">Ember "is too hard/complicated"</p>
+            <p class="fragment">Ember "is Beta"</p>
+        </section>
+        <section>
+            <h3>Why You Should Use Ember</h3>
+            <p class="fragment">Ember has an amazing support community.</p>
+            <p class="fragment">Ember is supported and used by the biggest names in the industry.</p>
+            <p class="fragment">You've been exposed to the idea's in Ember before, as "Sproutcore".</p>
+            <p class="fragment">Sproutcore is the foundation of Apple's and Facebook's web interfaces.</p>
+            <p class="fragment">Ember is currently the choice framework of Groupon, Living Social, Apple, and Yahoo</p>
+        </section>
+        <section>
+            <h3>Why you should use Ember (technical perspective)</h3>
+            <p class="fragment">Ember's design decisions are proven best practices.</p>
+            <p class="fragment">Ember isn't "Beta", but be careful: ember-data most definitely is.</p>
+            <p class="fragment">Ember's learning curve can be steep, but the payoff curve is far steeper.</p>
+        </section>
+        <section>
+            <h4>The Ember-bootstrap caveat</h4>
+            <p>Ember uses handlebars.js for templating and metamorph for content binding (as do most frameworks that allow for live-binding).  This inserts script tags that decrease rendering performance and prevents some CSS selectors used by Bootstrap from operating correctly.</p>
+        </section>
+        <section>
+            <h4>The Ember-bootstrap brightside</h4>
+            <p>The Ember team is close to releasing HTMLBars. This will solve the Bootstrap issue, and will also make Ember the most performant framework on the web.  In some test cases, HTMLBars results in Ember out-performing default native rendering.</p>
+        </section>
+    </section>
+</section>
+
+
+
+
+<section>
+    <h2>Part 2</h2>
+    <h4 class="fragment">Programming Paradigms</h4>
+</section>
+<section>
+</section>
+
+
+
+
+<section>
+    <h2>Part 3</h2>
+    <h4 class="fragment">On Your Mark</h4>
+    <p>An introduction to radid web application prototyping with Ember and Firebase</p>
+</section>
+</div>
+</div>
+
+
+
+
+
+
+
+
+
+
+<script type="text/javascript">
+    Reveal.initialize({
+
+        // Display controls in the bottom right corner
+        controls: true,
+
+        // Display a presentation progress bar
+        progress: true,
+
+        // Display the page number of the current slide
+        slideNumber: false,
+
+        // Push each slide change to the browser history
+        history: false,
+
+        // Enable keyboard shortcuts for navigation
+        keyboard: true,
+
+        // Enable the slide overview mode
+        overview: true,
+
+        // Vertical centering of slides
+        center: true,
+
+        // Enables touch navigation on devices with touch input
+        touch: true,
+
+        // Loop the presentation
+        loop: false,
+
+        // Change the presentation direction to be RTL
+        rtl: false,
+
+        // Turns fragments on and off globally
+        fragments: true,
+
+        // Flags if the presentation is running in an embedded mode,
+        // i.e. contained within a limited portion of the screen
+        embedded: false,
+
+        // Number of milliseconds between automatically proceeding to the
+        // next slide, disabled when set to 0, this value can be overwritten
+        // by using a data-autoslide attribute on your slides
+        autoSlide: 0,
+
+        // Stop auto-sliding after user input
+        autoSlideStoppable: true,
+
+        // Enable slide navigation via mouse wheel
+        mouseWheel: false,
+
+        // Hides the address bar on mobile devices
+        hideAddressBar: true,
+
+        // Opens links in an iframe preview overlay
+        previewLinks: false,
+
+        // Transition style
+        transition: 'default', // default/cube/page/concave/zoom/linear/fade/none
+
+        // Transition speed
+        transitionSpeed: 'default', // default/fast/slow
+
+        // Transition style for full page slide backgrounds
+        backgroundTransition: 'default', // default/none/slide/concave/convex/zoom
+
+        // Number of slides away from the current that are visible
+        viewDistance: 3,
+
+        // Parallax background image
+        parallaxBackgroundImage: '', // e.g. "'https://s3.amazonaws.com/hakim-static/reveal-js/reveal-parallax-1.jpg'"
+
+        // Parallax background size
+        parallaxBackgroundSize: '', // CSS syntax, e.g. "2100px 900px"
+
+        dependencies: [
+
+            // Interpret Markdown in <section> elements
+            { src: 'http://lab.hakim.se/reveal-js/plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+            { src: 'http://lab.hakim.se/reveal-js/plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+
+            // Syntax highlight for <code> elements
+            { src: 'http://lab.hakim.se/reveal-js/plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } }
+
+        ]
+    });
+</script>
+</body>
+</html>
