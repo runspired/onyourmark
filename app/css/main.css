@@ -8,18 +8,6 @@ Author: Chris Thoburn, http://runspired.com
 
 @media all {
 
-/*
-----------------[ UNIVERSAL ]----------------
-*/
-
-a, a.link { color: rgb(0,121,193); cursor: pointer; text-decoration: none; border: none; border-bottom: 1px dashed rgba(0,121,193,.5); }
-a:active, a.active { rgb(0,60,88);}
-a:visited, a.visited { rgb(115,185,240);}
-a:hover, a.hover { border-bottom: 1px solid rgba(0,121,193,1); }
-
-.link { cursor: pointer; }
-.link:hover { border-bottom: 1px solid rgba(0,121,193,1);}
-
 
 /*
 ----- GROWL -----

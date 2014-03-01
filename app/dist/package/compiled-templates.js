@@ -58,6 +58,16 @@ helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
   
 });
 
+Ember.TEMPLATES["login"] = Ember.Handlebars.template(function anonymous(Handlebars,depth0,helpers,partials,data) {
+this.compilerInfo = [4,'>= 1.0.0'];
+helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
+  
+
+
+  data.buffer.push("<h3>Login</h3>\n<div class=\"container\">\n    <form class=\"form-inline\" role=\"form\">\n        <div class=\"form-group\">\n            <label class=\"sr-only\" for=\"exampleInputEmail2\">Email address</label>\n            <input type=\"email\" class=\"form-control\" id=\"exampleInputEmail2\" placeholder=\"Enter email\">\n        </div>\n        <div class=\"form-group\">\n            <label class=\"sr-only\" for=\"exampleInputPassword2\">Password</label>\n            <input type=\"password\" class=\"form-control\" id=\"exampleInputPassword2\" placeholder=\"Password\">\n        </div>\n        <button type=\"submit\" class=\"btn btn-default\">Sign in</button>\n    </form>\n</div>\n\n<h3>Register</h3>\n<div class=\"container\">\n    <form class=\"form-inline\" role=\"form\">\n        <div class=\"form-group\">\n            <label class=\"sr-only\" for=\"exampleInputEmail2\">Email address</label>\n            <input type=\"email\" class=\"form-control\" id=\"exampleInputEmail2\" placeholder=\"Enter email\">\n        </div>\n        <div class=\"form-group\">\n            <label class=\"sr-only\" for=\"exampleInputPassword2\">Password</label>\n            <input type=\"password\" class=\"form-control\" id=\"exampleInputPassword2\" placeholder=\"Password\">\n        </div>\n        <button type=\"submit\" class=\"btn btn-default\">Register</button>\n    </form>\n</div>");
+  
+});
+
 Ember.TEMPLATES["session"] = Ember.Handlebars.template(function anonymous(Handlebars,depth0,helpers,partials,data) {
 this.compilerInfo = [4,'>= 1.0.0'];
 helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
@@ -91,6 +101,33 @@ helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
   hashContexts = {};
   data.buffer.push(escapeExpression(helpers.action.call(depth0, "login", {hash:{},contexts:[depth0],types:["STRING"],hashContexts:hashContexts,hashTypes:hashTypes,data:data})));
   data.buffer.push(" value=\"Log In\">Log In</button>\n        </div>\n\n    </div>\n</div>");
+  return buffer;
+  
+});
+
+Ember.TEMPLATES["welcome"] = Ember.Handlebars.template(function anonymous(Handlebars,depth0,helpers,partials,data) {
+this.compilerInfo = [4,'>= 1.0.0'];
+helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
+  var buffer = '', stack1, stack2, hashContexts, hashTypes, options, self=this, helperMissing=helpers.helperMissing;
+
+function program1(depth0,data) {
+  
+  
+  data.buffer.push("Get Started!");
+  }
+
+  data.buffer.push("<div class=\"col-md-8\">\n    <h1>Welcome!</h1>\n    <p>OnYourMark let's you collaborate while taking notes in <a href=\"http://daringfireball.net/\">Markdown</a> with your friends!</p>\n    ");
+  hashContexts = {'type': depth0,'role': depth0,'tagName': depth0,'classNames': depth0};
+  hashTypes = {'type': "STRING",'role': "STRING",'tagName': "STRING",'classNames': "STRING"};
+  options = {hash:{
+    'type': ("button"),
+    'role': ("button"),
+    'tagName': ("button"),
+    'classNames': ("btn btn-primary active")
+  },inverse:self.noop,fn:self.program(1, program1, data),contexts:[depth0],types:["STRING"],hashContexts:hashContexts,hashTypes:hashTypes,data:data};
+  stack2 = ((stack1 = helpers['link-to'] || depth0['link-to']),stack1 ? stack1.call(depth0, "login", options) : helperMissing.call(depth0, "link-to", "login", options));
+  if(stack2 || stack2 === 0) { data.buffer.push(stack2); }
+  data.buffer.push("\n</div>");
   return buffer;
   
 });
