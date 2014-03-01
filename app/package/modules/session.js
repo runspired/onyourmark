@@ -1,4 +1,4 @@
-/*global Ember, WDD, Utils*/
+/*global Ember, OYM, Utils*/
 (function () {
     "use strict";
 
@@ -183,4 +183,4 @@
         templateName : 'session'
     });
 
-}).call(WDD);
+}).call(OYM);

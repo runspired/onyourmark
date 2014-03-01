@@ -3,12 +3,12 @@
 //we do this at the beginning of the file
 //because this is the last file
 //and we need to bind the store first
-/*global WDD, Ember*/
-WDD.advanceReadiness();
+/*global OYM, Ember*/
+OYM.advanceReadiness();
 
 var precompileTemplate = Ember.Handlebars.compile;
 
-WDD.TextField = Ember.TextField.extend({
+OYM.TextField = Ember.TextField.extend({
     attributeBindings : ['autofocus', 'name'],
     autofocus : false,
     didInsertElement : function () {
@@ -20,11 +20,11 @@ WDD.TextField = Ember.TextField.extend({
 
 });
 
-WDD.Checkbox = Ember.Checkbox.extend({
+OYM.Checkbox = Ember.Checkbox.extend({
     attributeBindings : ['name']
 });
 
-WDD.liveNotes = Ember.View.extend({
+OYM.liveNotes = Ember.View.extend({
     templateName : 'liveNotes',
     classNames : ['liveNotes'],
     tagName : 'div',
@@ -34,7 +34,7 @@ WDD.liveNotes = Ember.View.extend({
     labelText : ''
 });
 
-WDD.helpText = Ember.View.extend({
+OYM.helpText = Ember.View.extend({
     template : precompileTemplate('<span class="helpText">{{{view.value}}}</span>'),
     classNames : ['helpTextWrapper'],
     tagName : 'span',
@@ -42,7 +42,7 @@ WDD.helpText = Ember.View.extend({
 });
 
 /*global jQuery, animateLogo*/
-WDD.Logo = Ember.View.extend({
+OYM.Logo = Ember.View.extend({
     templateName : 'logo',
     classNames : ['logo'],
     classNameBindings : ['isDark:dark:'],
@@ -62,7 +62,7 @@ WDD.Logo = Ember.View.extend({
 });
 
 
-WDD.collapseToggle = Ember.View.extend({
+OYM.collapseToggle = Ember.View.extend({
 
     template : precompileTemplate('<div class="collapseToggle"><span></span></div>'),
     classNames : ['collapseToggleWrapper'],
@@ -85,7 +85,7 @@ WDD.collapseToggle = Ember.View.extend({
 		}
 });
 
-WDD.searchInputField = Ember.View.extend({
+OYM.searchInputField = Ember.View.extend({
 		templateName		:	'searchInputField'
 	,	name						:	''
 	,	value						:	''
@@ -93,7 +93,7 @@ WDD.searchInputField = Ember.View.extend({
 	,	options					:	false
 });
 
-WDD.searchInput =	WDD.TextField.extend({
+OYM.searchInput =	OYM.TextField.extend({
 			attributeBindings	:	['value','data-0','data-75','onFocus','onBlur']
 		,	value	:	''
 		,	'data-0'	:	''
@@ -103,7 +103,7 @@ WDD.searchInput =	WDD.TextField.extend({
 		,	placeholder : "SEARCH: Jobs, Portfolios, Clients..."
 		,	autofocus  : "autofocus"
 		,	keyUp	:	function(){  this.process( this.parser.parse(this.value));  }
-	//	,	parser	:	 WDD.Search.create()
+	//	,	parser	:	 OYM.Search.create()
 		,	process:	function(o){ console.log('processing',o);}
 	
 		});
@@ -112,7 +112,7 @@ WDD.searchInput =	WDD.TextField.extend({
 /*
 	Extended Form Fields that include validation checks
 */
-WDD.validatedField = WDD.TextField.extend({
+OYM.validatedField = OYM.TextField.extend({
 		focusNow				:	function(){}
 	,	labelText				:	''
 	,	helpText					:	false

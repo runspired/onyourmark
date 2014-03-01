@@ -4,6 +4,7 @@
 *.log
 *.dbg
 * - Copy
+app/bower_components
 .DS_Store
 .idea
 archives

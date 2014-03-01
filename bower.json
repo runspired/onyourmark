@@ -3,7 +3,8 @@
     "version": "0.1.0",
     "dependencies": {
         "jquery": "2.0.3",
-        "ember": "~1.4.0-beta.2",
+        "ember": "~1.5.0-beta.2",
+        "ember-data-shim": "~1.0.0-beta.7",
         "moment": "~2.5.0",
         "showdown": "~0.3.1"
     },

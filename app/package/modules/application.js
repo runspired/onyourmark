@@ -1,4 +1,4 @@
-/*global WDD, Ember, WDD_FIXTURES, Utils*/
+/*global OYM, Ember, Utils*/
 (function () {
     "use strict";
 
@@ -27,4 +27,4 @@
 
     });
 
-}.call(WDD));
+}.call(OYM));

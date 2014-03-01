@@ -2,23 +2,12 @@
  -----------[ REST / Ember-data Configuration ]-----------
  */
 
-/*global DS, WDD, require, Ember, WDD_FIXTURES*/
+/*global DS, OYM, require, Ember */
 
-WDD.ApplicationSerializer = DS.ActiveModelSerializer.extend({});
+//OYM.ApplicationSerializer = DS.RESTSerializer.extend({});
 
-WDD.ApplicationAdapter = DS.ActiveModelAdapter.extend({});
-
-DS.ArrayTransform = DS.Transform.extend({
-
-    deserialize: function (serialized) {
-        return Ember.isNone(serialized) ? null : Ember.A(serialized);
-    },
-
-    serialize: function (deserialized) {
-        return Ember.isNone(deserialized) ? null : Ember.A(deserialized);
-    }
-
+OYM.ApplicationAdapter = DS.FirebaseAdapter.extend({
+    firebase: new Firebase("https://onyourmark.firebaseio.com/")
 });
-WDD.register('transform:array', DS.ArrayTransform);
 
-WDD.ApplicationAdapter.reopen({});
+OYM.ApplicationAdapter.reopen({});

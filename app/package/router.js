@@ -1,5 +1,5 @@
 /*global WDD*/
-WDD.Router.map(function () {
+OYM.Router.map(function () {
     "use strict";
 
     this.route('session');
