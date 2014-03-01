@@ -7,7 +7,7 @@
      * based on Aaron Haurwitz's work located here: http://aaron.haurwitz.com/#!/posts/growllike-notifications-with-emberjs
      */
 
-    /*global Ember, WDD*/
+    /*global Ember, OYM*/
     var precompileTemplate = Ember.Handlebars.compile;
 
     this.GrowlNotifications = Ember.CollectionView.extend({
@@ -153,4 +153,4 @@
 
     });
 
-}).call(WDD);
+}).call(OYM);
