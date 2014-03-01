@@ -61,20 +61,10 @@ helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
 Ember.TEMPLATES["login"] = Ember.Handlebars.template(function anonymous(Handlebars,depth0,helpers,partials,data) {
 this.compilerInfo = [4,'>= 1.0.0'];
 helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
-  
-
-
-  data.buffer.push("<h3>Login</h3>\n<div class=\"container\">\n    <form class=\"form-inline\" role=\"form\">\n        <div class=\"form-group\">\n            <label class=\"sr-only\" for=\"exampleInputEmail2\">Email address</label>\n            <input type=\"email\" class=\"form-control\" id=\"exampleInputEmail2\" placeholder=\"Enter email\">\n        </div>\n        <div class=\"form-group\">\n            <label class=\"sr-only\" for=\"exampleInputPassword2\">Password</label>\n            <input type=\"password\" class=\"form-control\" id=\"exampleInputPassword2\" placeholder=\"Password\">\n        </div>\n        <button type=\"submit\" class=\"btn btn-default\">Sign in</button>\n    </form>\n</div>\n\n<h3>Register</h3>\n<div class=\"container\">\n    <form class=\"form-inline\" role=\"form\">\n        <div class=\"form-group\">\n            <label class=\"sr-only\" for=\"exampleInputEmail2\">Email address</label>\n            <input type=\"email\" class=\"form-control\" id=\"exampleInputEmail2\" placeholder=\"Enter email\">\n        </div>\n        <div class=\"form-group\">\n            <label class=\"sr-only\" for=\"exampleInputPassword2\">Password</label>\n            <input type=\"password\" class=\"form-control\" id=\"exampleInputPassword2\" placeholder=\"Password\">\n        </div>\n        <button type=\"submit\" class=\"btn btn-default\">Register</button>\n    </form>\n</div>");
-  
-});
-
-Ember.TEMPLATES["session"] = Ember.Handlebars.template(function anonymous(Handlebars,depth0,helpers,partials,data) {
-this.compilerInfo = [4,'>= 1.0.0'];
-helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
   var buffer = '', hashContexts, hashTypes, escapeExpression=this.escapeExpression;
 
 
-  data.buffer.push("<div id=\"login\">\n   \n    <div class=\"loginForm\">\n\n        <div class=\"inputItem\">\n            <label class=\"inputAddOn\">Email Address</label>\n\n            ");
+  data.buffer.push("<h3>Login</h3>\n<div class=\"container\">\n    <form class=\"form-inline\" role=\"form\">\n        <div class=\"form-group\">\n            <label class=\"sr-only\" for=\"exampleInputEmail2\">Email address</label>\n            <input type=\"email\" class=\"form-control\" id=\"exampleInputEmail2\" placeholder=\"Enter email\">\n        </div>\n        <div class=\"form-group\">\n            <label class=\"sr-only\" for=\"exampleInputPassword2\">Password</label>\n            <input type=\"password\" class=\"form-control\" id=\"exampleInputPassword2\" placeholder=\"Password\">\n        </div>\n        <button type=\"submit\" class=\"btn btn-default\">Sign in</button>\n    </form>\n</div>\n\n<h3>Register</h3>\n<div class=\"container\">\n    <form class=\"form-inline\" role=\"form\">\n        <div class=\"form-group\">\n            <label class=\"sr-only\" for=\"exampleInputEmail2\">Email address</label>\n            <input type=\"email\" class=\"form-control\" id=\"exampleInputEmail2\" placeholder=\"Enter email\">\n        </div>\n        <div class=\"form-group\">\n            <label class=\"sr-only\" for=\"exampleInputPassword2\">Password</label>\n            <input type=\"password\" class=\"form-control\" id=\"exampleInputPassword2\" placeholder=\"Password\">\n        </div>\n        <button type=\"submit\" class=\"btn btn-default\">Register</button>\n    </form>\n</div>\n");
   hashContexts = {'type': depth0,'autofocus': depth0,'class': depth0,'name': depth0,'value': depth0,'placeholder': depth0};
   hashTypes = {'type': "STRING",'autofocus': "STRING",'class': "STRING",'name': "STRING",'value': "ID",'placeholder': "STRING"};
   data.buffer.push(escapeExpression(helpers.view.call(depth0, "WDD.TextField", {hash:{
@@ -85,22 +75,67 @@ helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
     'value': ("session.username"),
     'placeholder': ("Enter Your Email Address")
   },contexts:[depth0],types:["ID"],hashContexts:hashContexts,hashTypes:hashTypes,data:data})));
-  data.buffer.push("\n\n        </div>\n        <div class=\"inputItem\">\n            <label class=\"inputAddOn\">Password</label>\n\n            ");
-  hashContexts = {'action': depth0,'type': depth0,'class': depth0,'name': depth0,'value': depth0,'placeholder': depth0};
-  hashTypes = {'action': "STRING",'type': "STRING",'class': "STRING",'name': "STRING",'value': "ID",'placeholder': "STRING"};
-  data.buffer.push(escapeExpression(helpers.view.call(depth0, "WDD.TextField", {hash:{
-    'action': ("login"),
+  return buffer;
+  
+});
+
+Ember.TEMPLATES["session"] = Ember.Handlebars.template(function anonymous(Handlebars,depth0,helpers,partials,data) {
+this.compilerInfo = [4,'>= 1.0.0'];
+helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
+  var buffer = '', hashContexts, hashTypes, escapeExpression=this.escapeExpression;
+
+
+  data.buffer.push("<h3>Login</h3>\n<div class=\"container\">\n    <form class=\"form-inline\" role=\"form\">\n        <div class=\"form-group\">\n            <label class=\"sr-only\" for=\"exampleInputEmail2\">Email address</label>\n            ");
+  hashContexts = {'type': depth0,'autofocus': depth0,'class': depth0,'name': depth0,'value': depth0,'placeholder': depth0};
+  hashTypes = {'type': "STRING",'autofocus': "STRING",'class': "STRING",'name': "STRING",'value': "ID",'placeholder': "STRING"};
+  data.buffer.push(escapeExpression(helpers.view.call(depth0, "OYM.TextField", {hash:{
+    'type': ("email"),
+    'autofocus': ("autofocus"),
+    'class': ("form-control"),
+    'name': ("email"),
+    'value': ("model.email"),
+    'placeholder': ("Enter Your Email Address")
+  },contexts:[depth0],types:["ID"],hashContexts:hashContexts,hashTypes:hashTypes,data:data})));
+  data.buffer.push("\n        </div>\n        <div class=\"form-group\">\n            <label class=\"sr-only\" for=\"exampleInputPassword2\">Password</label>\n            ");
+  hashContexts = {'type': depth0,'class': depth0,'name': depth0,'value': depth0,'placeholder': depth0};
+  hashTypes = {'type': "STRING",'class': "STRING",'name': "STRING",'value': "ID",'placeholder': "STRING"};
+  data.buffer.push(escapeExpression(helpers.view.call(depth0, "OYM.TextField", {hash:{
     'type': ("password"),
-    'class': ("inputAddOn inputField"),
-    'name': ("name"),
-    'value': ("session.password"),
+    'class': ("form-control"),
+    'name': ("password"),
+    'value': ("model.password"),
     'placeholder': ("Enter Your Password")
   },contexts:[depth0],types:["ID"],hashContexts:hashContexts,hashTypes:hashTypes,data:data})));
-  data.buffer.push("\n\n        </div>\n\n        <div class=\"formRow\">\n            <button class=\"button\" id=\"loginButton\" ");
+  data.buffer.push("\n        </div>\n        <button type=\"submit\" class=\"btn btn-default\" ");
   hashTypes = {};
   hashContexts = {};
   data.buffer.push(escapeExpression(helpers.action.call(depth0, "login", {hash:{},contexts:[depth0],types:["STRING"],hashContexts:hashContexts,hashTypes:hashTypes,data:data})));
-  data.buffer.push(" value=\"Log In\">Log In</button>\n        </div>\n\n    </div>\n</div>");
+  data.buffer.push(" value=\"Sign In\">Sign in</button>\n    </form>\n</div>\n\n<h3>Register</h3>\n<div class=\"container\">\n    <form class=\"form-inline\" role=\"form\">\n        <div class=\"form-group\">\n            <label class=\"sr-only\" for=\"exampleInputEmail2\">Email address</label>\n            ");
+  hashContexts = {'type': depth0,'autofocus': depth0,'class': depth0,'name': depth0,'value': depth0,'placeholder': depth0};
+  hashTypes = {'type': "STRING",'autofocus': "STRING",'class': "STRING",'name': "STRING",'value': "ID",'placeholder': "STRING"};
+  data.buffer.push(escapeExpression(helpers.view.call(depth0, "OYM.TextField", {hash:{
+    'type': ("email"),
+    'autofocus': ("autofocus"),
+    'class': ("form-control"),
+    'name': ("email"),
+    'value': ("model.email"),
+    'placeholder': ("Enter Your Email Address")
+  },contexts:[depth0],types:["ID"],hashContexts:hashContexts,hashTypes:hashTypes,data:data})));
+  data.buffer.push("\n        </div>\n        <div class=\"form-group\">\n            <label class=\"sr-only\" for=\"exampleInputPassword2\">Password</label>\n            ");
+  hashContexts = {'type': depth0,'class': depth0,'name': depth0,'value': depth0,'placeholder': depth0};
+  hashTypes = {'type': "STRING",'class': "STRING",'name': "STRING",'value': "ID",'placeholder': "STRING"};
+  data.buffer.push(escapeExpression(helpers.view.call(depth0, "OYM.TextField", {hash:{
+    'type': ("password"),
+    'class': ("form-control"),
+    'name': ("password"),
+    'value': ("model.password"),
+    'placeholder': ("Enter Your Password")
+  },contexts:[depth0],types:["ID"],hashContexts:hashContexts,hashTypes:hashTypes,data:data})));
+  data.buffer.push("\n        </div>\n        <button type=\"submit\" class=\"btn btn-default\" ");
+  hashTypes = {};
+  hashContexts = {};
+  data.buffer.push(escapeExpression(helpers.action.call(depth0, "register", {hash:{},contexts:[depth0],types:["STRING"],hashContexts:hashContexts,hashTypes:hashTypes,data:data})));
+  data.buffer.push(" value=\"Register\">Register</button>\n    </form>\n</div>");
   return buffer;
   
 });
@@ -125,7 +160,7 @@ function program1(depth0,data) {
     'tagName': ("button"),
     'classNames': ("btn btn-primary active")
   },inverse:self.noop,fn:self.program(1, program1, data),contexts:[depth0],types:["STRING"],hashContexts:hashContexts,hashTypes:hashTypes,data:data};
-  stack2 = ((stack1 = helpers['link-to'] || depth0['link-to']),stack1 ? stack1.call(depth0, "login", options) : helperMissing.call(depth0, "link-to", "login", options));
+  stack2 = ((stack1 = helpers['link-to'] || depth0['link-to']),stack1 ? stack1.call(depth0, "session", options) : helperMissing.call(depth0, "link-to", "session", options));
   if(stack2 || stack2 === 0) { data.buffer.push(stack2); }
   data.buffer.push("\n</div>");
   return buffer;

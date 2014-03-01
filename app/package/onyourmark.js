@@ -3,10 +3,7 @@
     /*
      -----------[ App Setup ]-------------
      */
-    /*global Ember, window, ENV*/
-
-    //allow query params
-    ENV = {FEATURES: {'query-params': true}};
+    /*global Ember, window*/
 
     //initialize the App
     var OYM = window.OYM = Ember.Application.create({

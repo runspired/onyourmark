@@ -21,10 +21,33 @@ showdown
 //primary application
 require('external/firebase');
 require('external/emberfire-latest');
+require('external/firebase-simple-login');
 require('extensions/utils');
 require('onyourmark');
 require('router');
 require('store');
+
+//global DS, Ember
+var attr = window.attr = DS.attr,
+    belongsTo = window.belongsTo = DS.belongsTo,
+    hasMany = window.hasMany = DS.hasMany,
+    Model = window.Model = DS.Model.extend({
+        persistence : function () {
+            "use strict";
+            var isDirty = this.get('isDirty'),
+                isNew = this.get('isNew'),
+                isSaving = this.get('isSaving');
+            return isSaving ? 'saving' :
+                (isNew ? 'new' :
+                    (isDirty ? 'dirty' :
+                        'clean')
+                    );
+        }.property('isDirty', 'isNew', 'isSaving'),
+        persistenceClass : function () {
+            "use strict";
+            return 'recordIs' + Utils.string.capFirstLetter(this.get('persistence'));
+        }.property('persistence')
+    });
 
 require('models/*');
 require('modules/*');

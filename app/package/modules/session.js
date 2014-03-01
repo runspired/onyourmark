@@ -8,11 +8,14 @@
 
         isLoggedIn : false,
 
-        username : '',
+        user : null,
 
         hostname : window.location.port === '9000' ? 'http://0.0.0.0:8000' : '',
 
         attemptedTransition : null,
+
+        firebase : null,
+        fireAuth : null,
 
         logout : function () {
 
@@ -41,8 +44,25 @@
 
         init : function () {
             this._super();
-            this.set('isLoggedIn',  !!Utils.cookie.get('EmberUser'));
-            this.set('username', Utils.cookie.get('EmberUser'));
+
+            var fireb = new Firebase('https://onyourmark.firebaseio.com'),
+                controller = this;
+
+            this.set('firebase', fireb);
+            this.set('fireAuth', new FirebaseSimpleLogin(fireb, function(error, user) {
+                if (error) {
+                    // an error occurred while attempting login
+                    console.log(error);
+                } else if (user) {
+                    // user authenticated with Firebase
+                    console.log('User ID: ' + user.id + ', Provider: ' + user.provider);
+                    controller.set('user', user);
+                    controller.set('isLoggedIn', true);
+                } else {
+                    // user is logged out
+                    controller.set('isLoggedIn', false);
+                }
+            }));
         }
     });
 
@@ -58,122 +78,42 @@
             }
         },
 
+        model : function () {
+            return {
+                email : null,
+                password : null
+            };
+        },
+
         actions : {
             login : function () {
 
-                if (window.location.hostname === '') {
-                    this.controllerFor("session").set('isLoggedIn', true);
-                    Utils.cookie.set('EmberUser', 'offline user');
-                    return;
-                }
+                var controller = this.controllerFor('session'),
+                    auth = controller.get('fireAuth'),
+                    model = this.modelFor('session');
 
-                Ember.$('#loginButton').addClass('working');
+                auth.login('password', {
+                    email : model.email,
+                    password : model.password,
+                    rememberMe : true
+                });
+            },
+            register : function () {
+                var controller = this.controllerFor('session'),
+                    auth = controller.get('fireAuth'),
+                    model = this.modelFor('session');
 
-                var route = this,
-
-                    controller = this.controllerFor('session'),
-
-                    setSession = function (m) {
-
-                        //set the Utils.cookies
-                        Utils.cookie.set('EmberUser', m.data.username, 7);
-                        window.location.reload(true);
-
-                    },
-
-                    loginError = function (m, t, a) {
-
-                        var message,
-                            button = Ember.$('#loginButton'),
-                            position = button.position(),
-                            width = button.width(),
-                            e;
-
-                        if (t === 'error') {
-
-                            switch (m.statusCode()) {
-                            case 401:
-                                message = 'Invalid login credentials.';
-                                break;
-                            case 403:
-                                message = 'You do not have sufficient access privileges.';
-                                break;
-                            case 404:
-                                message = 'The server is currently down or login path is misconfigured.';
-                                break;
-                            case 500:
-                                message = 'The server is currently down.';
-                                break;
-                            default:
-                                message = 'Error connecting to authentication server.';
-                                break;
-                            }
-                        } else if (m.status) {
-                            message = 'Invalid login credentials.';
-                        } else if (a < 1) {
-                            message = 'Login successful but unable initiate a session.';
-                        } else {
-                            message = 'An error occurred and login failed.';
+                console.log('registering');
+                auth.createUser(
+                    model.email,
+                    model.password,
+                    function(error, user) {
+                        console.log('hello world', error);
+                        if (!error) {
+                            console.log('User Id: ' + user.id + ', Email: ' + user.email);
                         }
-                        button.removeClass('working').after(
-                            '<span class="errorWrapper" style="display: none; top:' +
-                                position.top + 'px; left:' + (position.left + width + 25) +
-                                'px;"><span class="errorMessage">' + message +
-                                '</span></span>'
-                        );
-
-                        e = button.next();
-
-                        e.fadeIn(
-                            1000,
-                            (function () {
-                                setTimeout(
-                                    (function () {
-                                        e.fadeOut(
-                                            1000,
-                                            (function () {e.remove(); })
-                                        );
-                                    }),
-                                    3000
-                                );
-                            })
-                        );
-
-
-
-                    },
-                    attemptsRemaining = 2,
-                    request = {
-                        type : 'POST',
-                        url : controller.get('hostname') + '/employees/login/',
-
-                        data : {
-                            username : Ember.$('#login input[type=text]').eq(0).val(),
-                            password : Ember.$('#login input[type=password]').eq(0).val()
-                        },
-
-                        success : function (m) {
-
-                            if (m.status && m.status === 'Authentication failed.') {
-                                loginError(m);
-                            }
-
-                            //retry validation if authentication didn't return a username
-                            if (!!m.data.username) {
-                                setSession(m);
-                            } else if (attemptsRemaining--) {
-                                Ember.$.ajax(request);
-                            } else {
-                                loginError(m, 'success', attemptsRemaining);
-                            }
-
-                        },
-
-                        error : function (jqXHR) { loginError(jqXHR, 'error'); }
-                    };
-
-                Ember.$.ajax(request);
-
+                    }
+                );
             }
         }
 

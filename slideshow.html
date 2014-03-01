@@ -46,8 +46,8 @@
         ```javascript
         //curly brackets denote an object
         var User = {
-        firstname : '',
-        lastname : ''
+            firstname : '',
+            lastname : ''
         };
 
         User.firstname = "Chris";
@@ -64,9 +64,9 @@
         #### Our object now looks like this
         ```javascript
         {
-        firstname : 'Chris',
-        lastname : 'Thoburn',
-        fullname : 'Chris Thoburn'
+            firstname : 'Chris',
+            lastname : 'Thoburn',
+            fullname : 'Chris Thoburn'
         }
         ```
     </script>
@@ -81,8 +81,8 @@
         #### A Re-usable Javascript Object
         ```javascript
         var User = function () {
-        this.firstname = '';
-        this.lastname = '';
+            this.firstname = '';
+            this.lastname = '';
         },
         me = null;
 
@@ -107,13 +107,13 @@
 
         var User = function (initialValues) {
 
-        initialValues = initialValues || {};
+                initialValues = initialValues || {};
 
-        this.firstname = initialValues.firstname || '';
-        this.lastname = initialValues.lastname || '';
+                this.firstname = initialValues.firstname || '';
+                this.lastname = initialValues.lastname || '';
 
-        },
-        me = null;
+            },
+            me = null;
 
         me = new User({firstname: 'Chris', lastname : 'Thoburn'});
 
@@ -130,12 +130,12 @@
 
         //defines a new fullname method on this instance only
         me.fullname = function () {
-        return this.firstname + ' ' + this.lastname;
+            return this.firstname + ' ' + this.lastname;
         };
 
         //define a method on all instances of User now and in the future
         User.prototype.fullname = function () {
-        return (this.firstname ? this.firstname + ' ' : '') + this.lastname;
+            return (this.firstname ? this.firstname + ' ' : '') + this.lastname;
         };
 
         ```
@@ -147,14 +147,14 @@
         ```javascript
         function (initialValues) {
 
-        initialValues = initialValues || {};
+            initialValues = initialValues || {};
 
-        this.firstname = initialValues.firstname || '';
-        this.lastname = initialValues.lastname || '';
+            this.firstname = initialValues.firstname || '';
+            this.lastname = initialValues.lastname || '';
 
-        this.fullname = function () {
-        return (this.firstname ? this.firstname + ' ' : '') + this.lastname;
-        }
+            this.fullname = function () {
+                return (this.firstname ? this.firstname + ' ' : '') + this.lastname;
+            };
         }
         ```
     </script>
@@ -167,9 +167,9 @@
 
         //results in
         {
-        firstname : 'Chris',
-        lastname : 'Thoburn',
-        fullname : function () { ... } //returns "Chris Thoburn"
+            firstname : 'Chris',
+            lastname : 'Thoburn',
+            fullname : function () { ... } //returns "Chris Thoburn"
         }
 
         ```
@@ -188,21 +188,23 @@
         ```javascript
 
         Object.defineProperty (User, 'age', {
-        get : function () {
-        var birthday = value,
-        today = new Date(),
-        age = 0;
+            get : function () {
+                var birthday = value,
+                today = new Date(),
+                age = 0;
 
-        age = today.getYear() - birthday.getYear();
+                age = today.getYear() - birthday.getYear();
 
-        //adjust based on whether the date has passed yet
-        today.setFullYear(birthday.getFullYear());
-        if (today - birthday < 0) {
-        age--;
-        }
-        return age;
-        },
-        ...
+                //adjust based on whether the date has passed yet
+                today.setFullYear(birthday.getFullYear());
+                if (today - birthday < 0) {
+                    age--;
+                }
+                return age;
+            },
+
+            ...
+
         });
 
         ```
@@ -214,14 +216,16 @@
         ```javascript
 
         Object.defineProperty (User, 'age', {
-        ...
-        set : function (date) {
-        if (date instanceof Date) {
-        value = Date;
-        } else {
-        value = new Date(date);
-        }
-        },
+
+            ...
+
+            set : function (date) {
+                if (date instanceof Date) {
+                    value = Date;
+                } else {
+                    value = new Date(date);
+                }
+            },
         });
 
         ```
@@ -233,11 +237,11 @@
         ```javascript
 
         var stringify = function (anArray) {
-        return typeof anArray === 'string' ? anArray.join(' ') || '';
+            return typeof anArray === 'string' ? anArray.join(' ') || '';
         };
 
         function stringify (anArray) {
-        return typeof anArray === 'string' ? anArray.join(' ') || '';
+            return typeof anArray === 'string' ? anArray.join(' ') || '';
         };
         ```
     </script>
@@ -249,18 +253,19 @@
 
         var stringify = function () {
 
-        var newString = '',
-        index = arguments.length;
+            var newString = '',
+                index = arguments.length;
 
-        arguments.reverse();
+            arguments.reverse();
 
-        while (index--) {
+            while (index--) {
 
-        if( typeof arguments[index] === 'array') {
-        arguments[index] = arguments[index].join(' ');
-        }
-        }
-        return arguments.join(' ');;
+                if( typeof arguments[index] === 'array') {
+                    arguments[index] = arguments[index].join(' ');
+                }
+            }
+
+            return arguments.join(' ');
         };
 
         ```
@@ -274,7 +279,7 @@
         var count = 0;
 
         function incrementCount () {
-        count += 1;
+            count += 1;
         };
 
         ```
@@ -323,14 +328,15 @@
 
             //global
             count = 0;
-            (function () {
-            //closure
-            var count = 1;
 
-            //this is the parent scope here
-            this.sayCount = function () {
-            return count;
-            };
+            (function () {
+                //closure
+                var count = 1;
+
+                //'this' is the closure scope here
+                this.sayCount = function () {
+                    return count;
+                };
             })();
 
             //alerts 0
@@ -357,19 +363,20 @@
 
             //global
             count = 0;
+
             (function () {
-            //closure
-            var count = 1;
+                //closure
+                var count = 1;
 
-            //this is the parent scope here
-            this.sayCount = function () {
-            return count;
-            };
+                //'this' is the closure scope here
+                this.sayCount = function () {
+                    return count;
+                };
 
-            this.getCount = function () {
-            var count = 2;
-            return count;
-            }
+                this.getCount = function () {
+                    var count = 2;
+                    return count;
+                }
 
             })();
 
@@ -400,9 +407,9 @@
             ```javascript
 
             function appendToString() {
-            var length = arguments.length, index;
-            for (index = 0; index < length; index++)
-            this.value += ' ' + arguments[index];
+                var length = arguments.length, index;
+                for (index = 0; index < length; index++)
+                    this.value += ' ' + arguments[index];
             };
 
             var aString = {value : ''};
@@ -418,13 +425,13 @@
             ```javascript
 
             function appendToString() {
-            var length = arguments.length, index;
-            for (index = 0; index < length; index++)
-            this.value += ' ' + arguments[index];
+                var length = arguments.length, index;
+                for (index = 0; index < length; index++)
+                    this.value += ' ' + arguments[index];
             };
 
             var aString = {value : ''},
-            stringFragments = ['Hello', 'there', 'world!'];
+                stringFragments = ['Hello', 'there', 'world!'];
 
             appendToString.apply(aString, stringFragments);
 
@@ -438,13 +445,13 @@
             ```javascript
 
             function appendToString() {
-            var length = arguments.length, index;
-            for (index = 0; index < length; index++)
-            this.value += ' ' + arguments[index];
+                var length = arguments.length, index;
+                for (index = 0; index < length; index++)
+                    this.value += ' ' + arguments[index];
             };
 
             var aString = {value : ''},
-            logString = appendToString.bind(aString);
+                logString = appendToString.bind(aString);
 
             logString('Hello');
             logString('World');
@@ -471,15 +478,15 @@
             Writing a javascript server as part of your web application is a horrible idea.
             ```javascript
             (function dontDoThis () {
-            var editor = document.getElementById('editor'),
-            cachedContents = '';
+                var editor = document.getElementById('editor'),
+                    cachedContents = '';
 
-            while (true) {
-            if( editor.innerHTML !== cachedContents) {
-            sendContentsToServer(editor.innerHTML);
-            cachedContents = editor.innerHTML;
-            }
-            }
+                while (true) {
+                    if( editor.innerHTML !== cachedContents) {
+                        sendContentsToServer(editor.innerHTML);
+                        cachedContents = editor.innerHTML;
+                    }
+                }
             }());
             ```
         </script>
@@ -491,7 +498,7 @@
             var editor = document.getElementById('editor');
 
             editor.onkeypress = function (event) {
-            sendToServer({keypress : String.fromCharCode(event.keyCode)});
+                sendToServer({keypress : String.fromCharCode(event.keyCode)});
             }
             ```
         </script>
@@ -504,7 +511,7 @@
             var editor = document.getElementById('editor');
 
             function keypressHandler (event) {
-            sendToServer({keypress : String.fromCharCode(event.keyCode)});
+                sendToServer({keypress : String.fromCharCode(event.keyCode)});
             }
 
             editor.addEventListener('keypress', keypressHandler , false);
@@ -521,7 +528,7 @@
             ####Timeouts: (what to expect when you're expecting)
             ```javascript
             function sayHello () {
-            alert('Hello World!');
+                alert('Hello World!');
             }
             setTimeout( sayHello, 1);
             alert('GoodBye World!');
@@ -562,21 +569,21 @@
             A simple AJAX GET request implemented using an RSVP promise.
             ```javascript
             function getJSON (url) {
-            var promise = new RSVP.Promise(function(resolve, reject){
-            var client = new XMLHttpRequest();
-            client.open("GET", url);
-            client.onreadystatechange = handler;
-            client.responseType = "json";
-            client.setRequestHeader("Accept", "application/json");
-            client.send();
+                var promise = new RSVP.Promise(function(resolve, reject){
+                    var client = new XMLHttpRequest();
+                    client.open("GET", url);
+                    client.onreadystatechange = handler;
+                    client.responseType = "json";
+                    client.setRequestHeader("Accept", "application/json");
+                    client.send();
 
-            function handler() {
-            if (this.readyState === this.DONE) {
-            if (this.status === 200) { resolve(this.response); }
-            else { reject(this); }
-            }
-            };
-            });
+                    function handler() {
+                        if (this.readyState === this.DONE) {
+                            if (this.status === 200) { resolve(this.response); }
+                            else { reject(this); }
+                        }
+                    };
+                });
             return promise;
             }
             ```
@@ -587,10 +594,10 @@
             ####Fulfilling Promises
             ```javascript
             getJSON('http://example.com/api/json/somedata')
-            .then(
-            function (data) { return JSON.parse(data); },
-            function (error) { alert('error'); }
-            );
+                .then(
+                    function (data) { return JSON.parse(data); },
+                    function (error) { alert('error'); }
+                );
             ```
         </script>
     </section>
@@ -599,19 +606,19 @@
             ####Chaining Promises
             ```javascript
             var comments = getJSON('http://example.com/api/json/document/1/')
-            .then(
-            function (data) {
-            var documentData = JSON.parse(data);
-            return getJSON(documentData.comments_uri); },
-            function (error) { alert('could not retrieve document data'); }
-            )
-            .then(
-            function (comments) { return JSON.parse(comments); },
-            function (error) { alert('could not retrieve document comments'); }
-            )
-            .catch(
-            function (error) { alert('could not parse comment data'); }
-            );
+                .then(
+                    function (data) {
+                        var documentData = JSON.parse(data);
+                        return getJSON(documentData.comments_uri); },
+                    function (error) { alert('could not retrieve document data'); }
+                )
+                .then(
+                    function (comments) { return JSON.parse(comments); },
+                    function (error) { alert('could not retrieve document comments'); }
+                )
+                .catch(
+                    function (error) { alert('could not parse comment data'); }
+                );
             ```
         </script>
     </section>
@@ -625,14 +632,15 @@
             ####Promise Arrays : .all()
             ```javascript
             var promises = [2, 3, 5, 7, 11, 13].map(function(id){
-            return getJSON("/post/" + id + ".json");
+                return getJSON("/post/" + id + ".json");
             });
 
-            RSVP.all(promises).then(function(posts) {
-            // posts contains an array of results for the given promises
-            }).catch(function(reason){
-            // if any of the promises fails.
-            });
+            RSVP.all(promises)
+                .then(function(posts) {
+                    // posts contains an array of results for the given promises
+                }).catch(function(reason){
+                    // if any of the promises fails.
+                });
             ```
         </script>
     </section>
@@ -641,13 +649,13 @@
             ####Promise Arrays : .hash()
             ```javascript
             var promises = {
-            posts: getJSON("/posts.json"),
-            users: getJSON("/users.json")
+                posts: getJSON("/posts.json"),
+                users: getJSON("/users.json")
             };
 
             RSVP.hash(promises).then(function(results) {
-            console.log(results.users) // print the users.json results
-            console.log(results.posts) // print the posts.json results
+                console.log(results.users) // print the users.json results
+                console.log(results.posts) // print the posts.json results
             });
             ```
         </script>
@@ -668,10 +676,10 @@
         <p class="fragment">Most "real-time" applications utilize all four request types in order to support all browser environments.</p>
     </section>
     <section>
-        <h4>Keyterms Defined</h4>
-        <p>TCP/IP: </p>
-        <p class="fragment">Socket: </p>
-        <p class="fragment">Port: </p>
+        <h4>Keyterms</h4>
+        <p>TCP/IP: Transfer Control Protocol / Internet Protocol</p>
+        <p class="fragment">Sockets</p>
+        <p class="fragment">Ports</p>
         <p class="fragment">HTTP: (Hyper Text Transfer Protocol).</p>
     </section>
     <section>
@@ -859,7 +867,7 @@
             <p class="fragment">Ember is supported and used by the biggest names in the industry.</p>
             <p class="fragment">You've been exposed to the idea's in Ember before, as "Sproutcore".</p>
             <p class="fragment">Sproutcore is the foundation of Apple's and Facebook's web interfaces.</p>
-            <p class="fragment">Ember is currently the choice framework of Groupon, Living Social, Apple, and Yahoo</p>
+            <p class="fragment">Ember is currently the choice framework of Groupon, Living Social, Apple, NBC, and Yahoo</p>
         </section>
         <section>
             <h3>Why you should use Ember (technical perspective)</h3>
@@ -883,18 +891,429 @@
 
 <section>
     <h2>Part 2</h2>
-    <h4 class="fragment">Programming Paradigms</h4>
+    <h4 class="fragment">Intro To Ember</h4>
 </section>
+<!-- Object Model -->
 <section>
+    <section>
+        <h3>The Ember Object Model</h3>
+        <ul>
+            <li>Observers</li>
+            <li>Computed Properties</li>
+            <li>Extensible</li>
+        </ul>
+    </section>
+    <section data-markdown>
+        <script type="text/template">
+            #### Named Objects
+            ```javascript
+            OnYourMark.Document = Ember.Object.extend({
+                title : '',
+                preview : '',
+                content : '',
+                comments : []
+            });
+            ```
+        </script>
+    </section>
+    <section data-markdown>
+        <script type="text/template">
+            #### Computed Properties
+            ```javascript
+            OnYourMark.Document = Ember.Object.extend({
+            ...
+            preview : function () {
+                var content = this.get('content'),
+                    length = content.length;
+
+                return (length > 140) ? content.substr(0, 137) + '...' : content;
+
+            }.property('content'),
+            ...
+            });
+
+            ```
+        </script>
+    </section>
+    <section data-markdown>
+        <script type="text/template">
+            #### Observers
+            ```javascript
+            OnYourMark.Document = Ember.Object.extend({
+            ...
+                triggerCommentsChange : function () {
+                    ;//do something
+                }.observes('comments.@each'),
+            ...
+            });
+
+            ```
+        </script>
+    </section>
+    <section data-markdown>
+        <script type="text/template">
+            #### Cacheable
+            Computed Properties are cached by default and only recomputed when the properties they observe change.  Calling .volatile() will turn off caching for the property.
+            ```javascript
+            OnYourMark.Document = Ember.Object.extend({
+            ...
+            preview : function () {
+                var content = this.get('content'),
+                    length = content.length;
+                return (length > 140) ? content.substr(0, 137) + '...' : content;
+            }.property('content').volatile(),
+            ...
+            });
+
+            ```
+        </script>
+    </section>
+    <section data-markdown>
+        <script type="text/template">
+            #### readOnly
+            Computed readOnly Properties don't accept a value
+            ```javascript
+            OnYourMark.Document = Ember.Object.extend({
+            ...
+            preview : function () {
+                var content = this.get('content'),
+                    length = content.length;
+
+                return (length > 140) ? content.substr(0, 137) + '...' : content;
+
+            }.property('content').readOnly(),
+            ...
+            });
+
+            ```
+        </script>
+    </section>
+    <section data-markdown>
+        <script type="text/template">
+            #### readOnly
+            Without readOnly, we could do something like this
+            ```javascript
+            OnYourMark.Document = Ember.Object.extend({
+            ...
+                authorName : function (key, value, oldValue) {
+                    //setter
+                    if (arguments.length > 1) {
+                        var nameParts = value.split(/\s+/);
+                        this.set('authorFirstname', nameParts[0]);
+                        this.set('authorLastname',  nameParts[1]);
+                    }
+
+                    //getter
+                    return this.get('authorFirstname') + ' ' + this.get('authorLastname');
+
+                }.property('content'),
+            ...
+            });
+
+            ```
+        </script>
+    </section>
+</section>
+
+<!-- App Setup and Extending Route-->
+<section>
+    <section>
+        <h3>Setting up an app</h3>
+    </section>
+    <section data-markdown>
+        <script type="text/template">
+            #### Defining your App
+            ```javascript
+            var OnYourMark = window.OnYourMark = Ember.Application.create({
+                LOG_TRANSITIONS: true,
+                LOG_BINDINGS: true,
+                LOG_VIEW_LOOKUPS: true,
+                LOG_STACKTRACE_ON_DEPRECATION: true,
+                LOG_VERSION: true,
+                debugMode: true,
+                ready: function () {
+                    //remove the loading screen
+                    Ember.$("#loading").remove();
+                }
+            });
+            ```
+        </script>
+    </section>
+    <section data-markdown>
+        <script type="text/template">
+            #### Delaying Readiness
+            ```javascript
+            OnYourMark.deferReadiness();
+            ```
+        </script>
+    </section>
+    <section>
+        <h3>Routes</h3>
+        <ul>
+            <li class="fragment">1:1 With URLs</li>
+            <li class="fragment">Does not constrain the URL</li>
+        </ul>
+    </section>
+    <section data-markdown>
+        <script type="text/template">
+            #### Defining your Router
+            ```javascript
+            OnYourMark.Router.map(function () {
+
+                this.route('session', {path : '/login'});
+                this.route('welcome');
+                this.resource('document', {path : '/documents'}, function () {
+                    this.route('single', { path : '/:document_id' });
+                });
+
+            });
+            ```
+        </script>
+    </section>
+    <section data-markdown>
+        <script type="text/template">
+            #### Everything is an Ember Object
+            Here, I'm extending Ember's Route object for use later
+            ```javascript
+            OnYourMark.Route = Ember.Route.extend({
+                enter: function () {
+                    this._super();
+                    window.scrollTo(0, 0);
+                }
+            });
+            ```
+        </script>
+    </section>
+    <section data-markdown>
+        <script type="text/template">
+            #### And Extending it again
+            ```javascript
+            OnYourMark.AuthenticatedRoute = OnYourMark.Route.extend({
+
+                beforeModel : function (transition) {
+
+                    var sessionController = this.controllerFor('session');
+
+                    //you should ensure unnecessary ajax requests are aborted here
+
+                    if (!sessionController.get('isLoggedIn')) {
+                        sessionController.set('attemptedTransition', transition);
+                        this.transitionTo('session');
+                    }
+
+                }
+            });
+            ```
+        </script>
+    </section>
+</section>
+
+<!-- Anatomy of An App -->
+<section>
+    <section>
+        <h2>Anatomy of An Ember App</h2>
+    </section>
+    <section data-markdown>
+        <script type="text/template">
+            #### Freebies
+            ```javascript
+            OnYourMark.ApplicationController = Ember.ArrayController.extend({
+
+                needs : ['session'],
+
+                renderTemplate : function () {
+                    this.render('growl/notification', {outlet : 'growl'});
+                }
+
+            });
+
+            OnYourMark.ApplicationRoute = App.Route.extend({
+
+                actions : {
+
+                    logout : function () {
+                        this.controllerFor('session').logout();
+                    }
+                }
+
+            });
+            ```
+        </script>
+    </section>
+    <section data-markdown>
+        <script type="text/template">
+            #### Routes
+            ```javascript
+            OnYourMark.DocumentRoute = OnYourMark.AuthenticatedRoute.extend({
+                model : function () {
+                    return this.get('store').find('document');
+                }
+            });
+            ```
+        </script>
+    </section>
+    <section data-markdown>
+        <script type="text/template">
+            #### Models
+            An Instance of an Ember.Object class, e.g. an instance of WebDevDaily.Post
+        </script>
+    </section>
+    <section data-markdown>
+        <script type="text/template">
+            #### Controllers
+            ```javascript
+            OnYourMark.DocumentController = Ember.Controller.extend({
+                documentsCount : function () {
+                    return this.get('model.length');
+                }.property('model.@each')
+            });
+            ```
+        </script>
+    </section>
+    <section data-markdown>
+        <script type="text/template">
+            #### Array Controllers
+            ```javascript
+            OnYourMark.DocumentController = Ember.ArrayController.extend({
+                documentsCount : function () {
+                    return this.get('model.length');
+                }.property('model.@each')
+            });
+            ```
+        </script>
+    </section>
+    <section data-markdown>
+        <script type="text/template">
+            #### Views
+            ```javascript
+            OnYourMark.DocumentView = Ember.View.extend({
+                templateName : 'document.list'
+            });
+            ```
+        </script>
+    </section>
+    <section data-markdown>
+        <script type="text/template">
+            #### Application Template
+            ```javascript
+            <h1>OnYourMark</h1>
+            {{outlet}}
+            {{growl}}
+            ```
+        </script>
+    </section>
+    <section data-markdown>
+        <script type="text/template">
+            #### Templates
+            template: feed/list
+            ```
+            <h1>Documents <span class="badge pull-right">{{documentsCount}}</span></h1>
+            <ul>
+                {{#each model as document}}
+                    {{#link-to "document.single" document tagName="li"}}
+                        <h2>{{document.title}}</h2>
+                        <p>{{document.preview}}</p>
+                    {{/link-to}}
+                {{/each}}
+            </ul>
+            ```
+        </script>
+    </section>
+    <section data-markdown>
+        <script type="text/template">
+            #### Components
+            ```javascript
+
+            ```
+        </script>
+    </section>
+    <section data-markdown>
+        <script type="text/template">
+            #### Mixins
+            ```javascript
+            App.Editable = Ember.Mixin.create({
+                edit: function() {
+                    console.log('starting to edit');
+                    this.set('isEditing', true);
+                },
+                isEditing: false
+            });
+
+            // Mix mixins into classes by passing them as the first arguments to
+            // .extend.
+            App.CommentView = Ember.View.extend(App.Editable, {
+                template: Ember.Handlebars.compile('{{#if view.isEditing}}...{{else}}...{{/if}}')
+            });
+
+            commentView = App.CommentView.create();
+            commentView.edit(); // outputs 'starting to edit'
+            ```
+        </script>
+    </section>
+    <section data-markdown>
+        <script type="text/template">
+            #### Dependency Injection
+            ```javascript
+            var App = Ember.Application.create({
+                ready: function(){
+                    this.register('session:current', App.Session, {singleton: true});
+                    this.inject('controller', 'session', 'session:current');
+                }
+            });
+            ```
+        </script>
+    </section>
+    <section data-markdown>
+        <script type="text/template">
+            #### Object Proxies
+        </script>
+    </section>
 </section>
 
 
+<!-- how it all fits together -->
+<section>
+    <img src="http://samhuri.net/f/ember-structure.png">
+</section>
+
+<!-- Actions & Promises & Hooks -->
+<section>
+    <section>
+        <h3>Actions</h3>
+    </section>
+    <section>
+        <h3>Hooks</h3>
+        <ul>
+            <li>init</li>
+            <li>didInsertElement</li>
+            <li>beforeModel, model, afterModel</li>
+            <li>enter</li>
+            <li>setupController</li>
+            <li>this._super()</li>
+            <li>ready</li>
+        </ul>
+    </section>
+</section>
 
 
 <section>
     <h2>Part 3</h2>
-    <h4 class="fragment">On Your Mark</h4>
-    <p>An introduction to radid web application prototyping with Ember and Firebase</p>
+    <h4 class="fragment">OnYourMark</h4>
+    <p>An introduction to rapid web application prototyping with Ember and Firebase</p>
+</section>
+<section>
+    <h2>What You'll Need</h2>
+    <p>
+        <ol>
+            <li>Ember</li>
+            <li>Ember Data</li>
+            <li>Handlebars</li>
+            <li>jQuery</li>
+            <li>bootstrap.css</li>
+            <li>firebase.js</li>
+            <li>EmberFire</li>
+        </ol>
+    </p>
 </section>
 </div>
 </div>
