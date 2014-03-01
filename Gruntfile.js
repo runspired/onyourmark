@@ -126,9 +126,9 @@ module.exports = function (grunt) {
         },
         jshint: {
             /*options: {
-                jshintrc: '.jshintrc',
-                reporter: require('jshint-stylish')
-            },*/
+             jshintrc: '.jshintrc',
+             reporter: require('jshint-stylish')
+             },*/
             all: [
                 'Gruntfile.js',
                 '<%= config.app %>/<%= config.scripts %>/{,*/}*.js',
@@ -146,8 +146,7 @@ module.exports = function (grunt) {
             all: {
                 dest: 'app/dist/<%= config.scripts %>/bower-components.js',
                 mainFiles: {
-                    'showdown': 'compressed/showdown.js',
-                    'skrollr': 'dist/skrollr.min.js'
+                    'showdown': 'compressed/showdown.js'
                 },
                 exclude: [
                     'jquery',
@@ -210,14 +209,14 @@ module.exports = function (grunt) {
         // not used since Uglify task does concat,
         // but still available if needed
         /*concat: {
-            dist: {}
-        },*/
+         dist: {}
+         },*/
         // not enabled since usemin task does concat and uglify
         // check index.html to edit your build targets
         // enable this task if you prefer defining your build targets here
         /*uglify: {
-            dist: {}
-        },*/
+         dist: {}
+         },*/
         rev: {
             dist: {
                 files: {
@@ -277,14 +276,14 @@ module.exports = function (grunt) {
             dist: {
                 options: {
                     /*removeCommentsFromCDATA: true,
-                    // https://github.com/yeoman/grunt-usemin/issues/44
-                    //collapseWhitespace: true,
-                    collapseBooleanAttributes: true,
-                    removeAttributeQuotes: true,
-                    removeRedundantAttributes: true,
-                    useShortDoctype: true,
-                    removeEmptyAttributes: true,
-                    removeOptionalTags: true*/
+                     // https://github.com/yeoman/grunt-usemin/issues/44
+                     //collapseWhitespace: true,
+                     collapseBooleanAttributes: true,
+                     removeAttributeQuotes: true,
+                     removeRedundantAttributes: true,
+                     useShortDoctype: true,
+                     removeEmptyAttributes: true,
+                     removeOptionalTags: true*/
                 },
                 files: [{
                     expand: true,
