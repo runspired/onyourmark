@@ -58,6 +58,7 @@
                     console.log('User ID: ' + user.id + ', Provider: ' + user.provider);
                     controller.set('user', user);
                     controller.set('isLoggedIn', true);
+                    controller.transitionToRoute('document');
                 } else {
                     // user is logged out
                     controller.set('isLoggedIn', false);
@@ -108,10 +109,13 @@
                     model.email,
                     model.password,
                     function(error, user) {
-                        console.log('hello world', error);
+
                         if (!error) {
                             console.log('User Id: ' + user.id + ', Email: ' + user.email);
+                            controller.transitionToRoute('document');
                         }
+                        else
+                            console.log('error registering:', error);
                     }
                 );
             }

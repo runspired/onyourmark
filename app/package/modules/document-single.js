@@ -12,12 +12,10 @@
         }
 
     });
-    App.DocumentSingleRoute = App.Route.extend({
+    App.DocumentSingleRoute = App.AuthenticatedRoute.extend({
 
        model : function () {
-           return this.get('store').createRecord('document', {
-               owner : EmberUser.id
-           })
+           return this.get('store').createRecord('document');
        }
 
     });

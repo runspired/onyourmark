@@ -1290,16 +1290,37 @@ OYM.User = Model.extend({
         }
 
     });
-    App.DocumentSingleRoute = App.Route.extend({
+    App.DocumentSingleRoute = App.AuthenticatedRoute.extend({
 
        model : function () {
-           return this.get('store').createRecord('document', {
-               owner : EmberUser.id
-           })
+           return this.get('store').createRecord('document');
        }
 
     });
     App.DocumentSingleView = Ember.View.extend({
+        classNames : ['container']
+    });
+
+}.call(OYM));
+
+})();
+
+(function() {
+
+(function () {
+    "use strict";
+
+    var App = this;
+
+    App.DocumentRoute = App.AuthenticatedRoute.extend({
+
+        model : function () {
+            return this.get('store').find('document');
+        }
+
+    });
+    App.DocumentView = Ember.View.extend({
+        templateName : 'document/list',
         classNames : ['container']
     });
 
@@ -1369,6 +1390,7 @@ OYM.User = Model.extend({
                     console.log('User ID: ' + user.id + ', Provider: ' + user.provider);
                     controller.set('user', user);
                     controller.set('isLoggedIn', true);
+                    controller.transitionToRoute('document');
                 } else {
                     // user is logged out
                     controller.set('isLoggedIn', false);
@@ -1419,10 +1441,13 @@ OYM.User = Model.extend({
                     model.email,
                     model.password,
                     function(error, user) {
-                        console.log('hello world', error);
+
                         if (!error) {
                             console.log('User Id: ' + user.id + ', Email: ' + user.email);
+                            controller.transitionToRoute('document');
                         }
+                        else
+                            console.log('error registering:', error);
                     }
                 );
             }

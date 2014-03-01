@@ -1,0 +1,10 @@
+<p>
+    {{#link-to 'document.single' type="button" role="button" tagName="button" classNames="btn btn-primary active"}}Create New Document{{/link-to}}
+</p>
+<h2>Documents <span class="badge">{{documentsCount}}</span></h2>
+<ul>
+    {{#each model as document}}
+        <h2>{{document.title}}</h2>
+        <p>{{document.preview}}</p>
+    {{/each}}
+</ul>
