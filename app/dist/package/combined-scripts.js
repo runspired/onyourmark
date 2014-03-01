@@ -795,8 +795,8 @@ OYM.Router.map(function () {
     "use strict";
 
     this.route('session');
-    this.resource('stream', {path : '/'}, function () {
-        this.route('single', { path : '/:stream_id' });
+    this.resource('document', {path : '/'}, function () {
+        this.route('single', { path : '/:document_id' });
     });
 
 });
@@ -850,6 +850,9 @@ OYM.ApplicationAdapter.reopen({});
             }
         }
 
+    });
+    App.ApplicationView = Ember.View.extend({
+        classNames : ['container']
     });
 
 }.call(OYM));
